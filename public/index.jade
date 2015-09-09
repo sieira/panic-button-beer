@@ -1,0 +1,26 @@
+doctype
+html(ng-app = 'eltast')
+  head
+    title #{title} - El tast
+    link(rel='stylesheet', href='bootstrap/dist/css/bootstrap.min.css')
+    link(rel='stylesheet', href='bootstrap/dist/css/bootstrap-theme.min.css')
+    link(rel='stylesheet', href='font-awesome/css/font-awesome.min.css')
+    link(rel='stylesheet', href='css/sticky-footer.css')
+
+  body
+    .page-header
+      | #[h1 el tast]
+    #content.main-content.container(ng-view)
+    footer.footer
+      .container
+        p.text-muted Proudly designed by #[a(href='http://www.spacebar.fr') spacebar]
+
+  script(src='jquery/dist/jquery.min.js')
+  script(src='angular/angular.min.js')
+  script(src='angular-route/angular-route.min.js')
+  script(src='bootstrap/dist/js/bootstrap.min.js')
+  script(src='momentjs/moment.js')
+  script(src='humanize-duration/humanize-duration.js')
+  script(src='angular-timer/dist/angular-timer.min.js')
+  script(src='js/controllers.js')
+  script(src='js/app.js')

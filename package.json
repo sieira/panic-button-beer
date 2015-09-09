@@ -1,0 +1,22 @@
+{
+  "name": "eltast",
+  "version": "0.0.0",
+  "description": "El tast panic button",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "make test"
+  },
+  "author": "Luis Sieira <luis.sieira@spacebar.fr> (http://www.spacebar.fr/)",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "mocha": "^2.3.2",
+    "morgan": "^1.6.1"
+  },
+  "dependencies": {
+    "express": "^4.13.3",
+    "jade": "^1.11.0",
+    "mongoose": "^4.1.6"
+  }
+}
