@@ -1,3 +1,14 @@
+/* Header
+-------------------------------------------------- */
+#logo {
+  max-height: 50px;
+}
+
+.page-header {
+  margin: 10px 10px 10px 10px;
+  padding-left: 20px;
+}
+
 /* Sticky footer styles
 -------------------------------------------------- */
 html {

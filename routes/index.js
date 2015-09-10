@@ -18,7 +18,6 @@ exports.index = function(req, res) {
  * GET panic-button view
  */
 exports.panicButton = function(req, res) {
-  console.log('Aqui estamos');
   res.render('views/panic-button', { title: 'Panic Button' });
 };
 
@@ -26,6 +25,5 @@ exports.panicButton = function(req, res) {
  * GET product-detail view
  */
 exports.productDetail = function(req, res) {
-  console.log('Aqui estamos');
   res.render('views/product-detail', { title: 'Beer' });
 };

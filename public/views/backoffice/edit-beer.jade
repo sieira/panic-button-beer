@@ -1,0 +1,34 @@
+.panel.panel-default
+  .panel-heading Add a new beer, dear
+  form.panel-body(name='form', ng-init='beer = {new: true, visible: true}', novalidate)
+  
+    alert.alert-danger(ng-show='form.$submitted && form.name.$error.required') #[.fa.fa-exclamation-triangle] Beer name is required
+    alert.alert-danger(ng-show='form.$submitted && form.file.$error.required') #[.fa.fa-exclamation-triangle] Beer image is required
+    alert.alert-danger(ng-show='form.$submitted && form.description.$error.required') #[.fa.fa-exclamation-triangle] Beer description is required
+    alert.alert-danger(ng-show='form.$submitted && form.price.$error.required') #[.fa.fa-exclamation-triangle] Beer price is required
+    alert.alert-danger(ng-show='form.$submitted && form.price.$error.number') #[.fa.fa-exclamation-triangle] The price is not a valid number
+    
+    .form-group(ng-class='{"has-error": (form.name.$dirty && form.name.$invalid)}')
+      label(for='name') Name
+      input.form-control(name='name', ng-model='beer.name', type='text', required)
+    .form-group
+      label(for='file') Photo
+      input(name='file', ng-model='beer.file', type='file', required, nv-file-select='' uploader='uploader')
+      
+      span(ng-repeat='item in uploader.queue')
+        .thumbnail(ng-thumb='{ file: item._file, height: 100 }')
+      p.help-block Gimme a file, not so big, and well proportioned
+    .form-group(ng-class='{"has-error": (form.description.$dirty && form.description.$invalid)}')
+      label(for='description') Description
+      textarea.form-control(name='description', ng-model='beer.description', rows = '10', required)
+      p.help-block Use MD format
+    .form-group(ng-class='{"has-error": (form.price.$dirty && form.price.$invalid)}')
+      label(for='price') Price
+      input.form-control(name='price', ng-model='beer.price', type='number', required)
+    .form-group
+      label(for='new') New
+      input.form-control(name='new', ng-model='beer.new', type='checkbox')
+    .form-group
+      label(for='wisible') Visible
+      input.form-control(name='visible', ng-model= 'beer.visible', type='checkbox')
+      button.btn.btn-default(type = 'submit', ng-click='editBeer(beer)') #[i.fa.fa-check] Add Beer

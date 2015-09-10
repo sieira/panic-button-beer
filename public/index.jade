@@ -5,22 +5,29 @@ html(ng-app = 'eltast')
     link(rel='stylesheet', href='bootstrap/dist/css/bootstrap.min.css')
     link(rel='stylesheet', href='bootstrap/dist/css/bootstrap-theme.min.css')
     link(rel='stylesheet', href='font-awesome/css/font-awesome.min.css')
-    link(rel='stylesheet', href='css/sticky-footer.css')
+    link(rel='stylesheet', href='css/styles.css')
 
   body
     .page-header
-      | #[h1 el tast]
+      img#logo.img-responsive(src = 'http://eltast.fr/wp-content/uploads/2015/03/LOGO_TAST_1.png' alt = 'eltast')
     #content.main-content.container(ng-view)
     footer.footer
       .container
         p.text-muted Proudly designed by #[a(href='http://www.spacebar.fr') spacebar]
 
   script(src='jquery/dist/jquery.min.js')
-  script(src='angular/angular.min.js')
-  script(src='angular-route/angular-route.min.js')
   script(src='bootstrap/dist/js/bootstrap.min.js')
+  script(src='angular/angular.min.js')
+  
+  //Angular modules  
+  script(src='angular-bootstrap/ui-bootstrap-tpls.min.js')
+  script(src='angular-route/angular-route.min.js')
+  script(src='angular-file-upload/dist/angular-file-upload.min.js')
   script(src='momentjs/moment.js')
   script(src='humanize-duration/humanize-duration.js')
   script(src='angular-timer/dist/angular-timer.min.js')
+
+  //Angular application
+  script(src='js/directives.js')
   script(src='js/controllers.js')
   script(src='js/app.js')
