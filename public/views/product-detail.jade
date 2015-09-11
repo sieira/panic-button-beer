@@ -1,20 +1,13 @@
 .row
   .figure.col-sm-5
-    img.img-responsive(src='http://sr1.wine-searcher.net/images/labels/00/56/10390056.jpg')
-    .figcaption Una foto realmente extraordinaria
+    img.img-responsive(ng-src='data:image/jpeg;base64,{{ image }}')
 
   .description.col-sm-7
-    h1 Mahou
-    p En su versión clásica, es indudablemente el mejor producto jamás creado por el ser humano
-    h1 El caloret
-    p El concepto es la cuestión, tú lo sabes, yo lo sé, nosotros lo sabemos... es hora de que ellos también lo sepan.
-    h1 La pajara pinta
-    p Estaba la pájara pinta sentadita en su verde limón. Con el pico picaba la hoja, con la hoja picaba la flor
-    hr
-    span.h3.pull-left#[.label.label-default Nouveautée !]
-    span.h3.pull-right#[.label.label-warning 10 € del ala]
+    h1 {{beer.name}}
+    div(ng-bind-html='beer.description | html')
+    .label.label-warning(ng-show='{{ beer.new }}') NOUVEAU !
 
 
-timer(countdown ='60', interval = '1000')
+timer(countdown ='30', interval = '1000')
   .progress
     .progress-bar.progress-bar-info(role = 'progressbar' , aria-valuenow = '{{progressBar}}', aria-valuemin = '0', aria-valuemax = '100', style = 'width: {{progressBar}}%;')

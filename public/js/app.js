@@ -26,6 +26,10 @@
 				templateUrl : '/edit-beer',
 				controller  : 'editBeerController'
 			})
+			.when('/beer-image/:_id', {
+				templateUrl : '/beer-image/:_id',
+				controller  : 'editBeerController'
+			})
 			.otherwise({
 				templateUrl : '/404'
 			});

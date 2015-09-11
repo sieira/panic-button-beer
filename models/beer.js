@@ -1,25 +1,23 @@
 'use strict';
 
 // TODO numeral lib will be used to convert between currency and Number for the price
-var mongoose = require('mongoose');
+var mongoose = require('mongoose'),
+    Schema = mongoose.Schema;
 
 // Define our beer schema
-var BeerSchema = new mongoose.Schema({
+var BeerSchema = new Schema({
   name: {
     type: String,
     unique: true,
     required: true
   },
-  img: {
-    data: Buffer,
-    content-type: String
-  },
+  img: { type: Schema.Types.ObjectId, ref: 'BeerImage', unique: true },
   description: String,
   price: Number,
-  new: Boolean,
-  visible: true,
+  new: { type: Boolean, default: true },
+  visible: { type: Boolean, default: false },
   // Weight for probability
-  weight: Number
+  weight: { type: Number, default: 1 }
 });
 
 // Export the Mongoose model

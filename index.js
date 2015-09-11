@@ -4,11 +4,13 @@
  * Dependencies
  */
 var express = require('express'),
+    mongoose = require('mongoose'),
     path = require('path'),
     logger = require('morgan')('combined'),
     routes = require('./routes'),
     bodyParser = require('body-parser'),
-    backoffice = require('./routes/backoffice');
+    backoffice = require('./routes/backoffice'),
+    multer = require('multer');
 
 var port = process.env.PORT || 8080;
 
@@ -16,7 +18,10 @@ var port = process.env.PORT || 8080;
  * Init stuff
  */
 var app = express(),
-    router = express.Router();
+    router = express.Router(),
+    upload = multer({ storage: multer.memoryStorage() });
+
+mongoose.connect('mongodb://localhost/eltast');
 
 app.set('port', port);
 app.set('views', path.join(__dirname,'/public'));
@@ -28,11 +33,19 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
 
 app.get('/', routes.index);
-app.get('/panic-button', routes.panicButton);
-app.get('/product-detail', routes.productDetail);
 app.get('/admin', backoffice.index);
+
+app.get('/panic-button', routes.panicButton);
+
+app.get('/product-detail', routes.productDetail);
+app.post('/product-detail', routes.productDetail);
+
 app.get('/edit-beer', backoffice.editBeer);
 app.post('/edit-beer', backoffice.editBeer);
+
+app.post('/register-beer-image', upload.single('file'), backoffice.registerBeerImage);
+app.get('/beer-image/:beerId', routes.beerImage);
+
 app.get('*', routes._404);
 
 

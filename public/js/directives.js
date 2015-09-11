@@ -1,14 +1,14 @@
 'use strict';
 
 (function() {
-  var app = angular.module('eltast-directives', []);
+  var app = angular.module('eltast-directives', [])
 
   /**
   * The ng-thumb directive
   * @author: nerv
   * @version: 0.1.2, 2014-01-09
   */
-  app.directive('ngThumb', ['$window', function($window) {
+  .directive('ngThumb', ['$window', function($window) {
     var helper = {
       support: !!($window.FileReader && $window.CanvasRenderingContext2D),
       isFile: function(item) {
@@ -51,5 +51,32 @@
         }
       }
     };
-  }]);
+  }])
+
+  .directive('validBeerName',function(){
+    //TODO comprobar que la birra no exista ya, y no validar si el nombre existe
+  })
+
+  .directive('validFile',function(){
+    function isImage(item) {
+      var type = '|' + item.slice(item.lastIndexOf('.') + 1) + '|';
+      return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
+    }
+
+    return {
+      require:'ngModel',
+      link: function(scope,el,attrs,ctrl) {
+        ctrl.$setValidity('required', el.val() != '');
+        //change event is fired when file is selected
+        el.bind('change',function(){
+          ctrl.$setValidity('required', el.val() != '');
+          ctrl.$setValidity('valid_file', isImage(el.val()));
+          scope.$apply(function(){
+            ctrl.$setViewValue(el.val());
+            ctrl.$render();
+          });
+        });
+      }
+    }
+  })
 })();

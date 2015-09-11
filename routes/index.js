@@ -1,5 +1,7 @@
 'use strict';
 
+var BeerController = require('../controllers/beer');
+
 /*
  * GET 404 page
  */
@@ -25,5 +27,28 @@ exports.panicButton = function(req, res) {
  * GET product-detail view
  */
 exports.productDetail = function(req, res) {
-  res.render('views/product-detail', { title: 'Beer' });
+    if(req.method === "GET") {
+      res.render('views/product-detail', { title: 'Beer' });
+    } else {
+      BeerController.getRandomBeer()
+      .then(function (data) {
+        res.status(200).json({ message: data });
+      },
+      function(err) {
+        // TODO handle this error
+        res.status(418).json({ message: err });
+      });
+    }
+};
+
+exports.beerImage = function(req, res) {
+  console.log(req.params);
+  BeerController.getBeerImage(req.params.beerId)
+  .then(function (data) {
+    res.status(200).json(data);
+  },
+  function(err) {
+    // TODO handle this error
+    res.status(418).json({ message: err });
+  });
 };
