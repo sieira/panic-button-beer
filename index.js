@@ -1,5 +1,6 @@
 'use strict';
 
+// TODO hacer fullscreen http://www.html5rocks.com/en/mobile/fullscreen/?redirect_from_locale=fr
 /**
  * Dependencies
  */
@@ -39,6 +40,10 @@ app.get('/panic-button', routes.panicButton);
 
 app.get('/product-detail', routes.productDetail);
 app.post('/product-detail', routes.productDetail);
+
+app.get('/beer-list', backoffice.beerList);
+app.get('/beer-preview', backoffice.beerPreview);
+app.post('/set-visibility/:beerId', backoffice.setVisibility);
 
 app.get('/edit-beer', backoffice.editBeer);
 app.post('/edit-beer', backoffice.editBeer);

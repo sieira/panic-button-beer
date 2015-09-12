@@ -79,4 +79,12 @@
       }
     }
   })
+
+  .directive('beerPreview', function() {
+    return {
+      restrict : 'E',
+      templateUrl : 'beer-preview',
+      controller : 'beerPreviewController'
+    };
+  });
 })();

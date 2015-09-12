@@ -1,19 +1,19 @@
 'use strict';
 
 (function() {
-	var app = angular.module('eltast', ['eltast-controllers', 'eltast-directives', 'ngRoute']);
+	var app = angular.module('eltast', ['eltast-controllers', 'eltast-directives', 'ngRoute'])
 
-  app.config(['$routeProvider',
+  .config(['$routeProvider',
 		function($routeProvider) {
 			$routeProvider
 
-			// route for the home page
+			/*
+			 *  Routes
+			 */
 			.when('/', {
 				templateUrl : '/panic-button',
 				controller  : 'mainController'
 			})
-
-			// route for the beer-details page
 			.when('/product-detail', {
 				templateUrl : '/product-detail',
 				controller  : 'productDetailController'
@@ -28,7 +28,6 @@
 			})
 			.when('/beer-image/:_id', {
 				templateUrl : '/beer-image/:_id',
-				controller  : 'editBeerController'
 			})
 			.otherwise({
 				templateUrl : '/404'

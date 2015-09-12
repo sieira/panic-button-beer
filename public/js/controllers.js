@@ -1,20 +1,51 @@
 'use strict';
 
 (function() {
-  var app = angular.module('eltast-controllers', ['ui.bootstrap', 'angularFileUpload', 'timer']);
+  var app = angular.module('eltast-controllers', ['ui.bootstrap', 'angularFileUpload', 'timer'])
 
-  app.filter('html', ['$sce', function ($sce) {
+  .filter('html', ['$sce', function ($sce) {
       return function (text) {
           return $sce.trustAsHtml(text);
       };
   }])
 
-  app.controller('mainController', ['$log', '$scope', function($log, $scope) {
-    // create a message to display in our view
-    $scope.message = 'Everyone come and see how good I look!';
-  }]);
+  /**
+   * Home page controller
+   */
+  .controller('mainController', ['$rootScope', function($rootScope) {
+    $rootScope.showHeader = false;
+    /*
+     * TODO
+     * Animate the button on click
+     */
+  }])
 
-  app.controller('productDetailController', ['$log', '$scope', '$http', '$window', function($log, $scope, $http, $window) {
+  .controller('backofficeController', ['$log', '$rootScope', '$scope', '$http', function($log, $rootScope, $scope, $http) {
+    $rootScope.showHeader = true;
+
+    $http.get('beer-list')
+    .then(function(response) {
+      $scope.beerList = response.data;
+    }, function(err) {
+      $log.error('Error getting beer list', err);
+    });
+  }])
+
+  .controller('beerPreviewController', ['$log', '$scope', '$http', function($log, $scope, $http) {
+    $scope.switchVisibility = function() {
+      $http.post('set-visibility/' + $scope.beer._id, { visibility : !$scope.beer.visible })
+      .then(function(response) {
+        $log.debug('Response', response);
+        $scope.beer.visible = !$scope.beer.visible;
+      }, function(err) {
+        $log.error('Error setting visibility', err);
+      });
+    }
+  }])
+
+  .controller('productDetailController', ['$log', '$rootScope', '$scope', '$http', '$window', function($log, $rootScope, $scope, $http, $window) {
+    $rootScope.showHeader = true;
+
     $http.post('product-detail', {})
     .then(function(response) {
       var beer = $scope.beer = response.data.message;
@@ -37,9 +68,11 @@
       //TODO wait until the end of the bar animation
       $window.location.href = '#/';
     });
-  }]);
+  }])
 
-  app.controller('editBeerController', ['$log', '$scope', '$http', 'FileUploader', function($log, $scope, $http, FileUploader) {
+  .controller('editBeerController', ['$log', '$rootScope', '$scope', '$http', 'FileUploader', function($log, $rootScope, $scope, $http, FileUploader) {
+    $rootScope.showHeader = true;
+
     $.fn.bootstrapSwitch.defaults.onText = 'YES';
   	$.fn.bootstrapSwitch.defaults.offText = 'NO';
   	$.fn.bootstrapSwitch.defaults.size = 'mini';

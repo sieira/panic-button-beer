@@ -5,8 +5,34 @@ var BeerController = require('../controllers/beer');
 /*
  * GET backoffice index
  */
-exports.index = function(req, res){
+exports.index = function(req, res) {
     res.render('views/backoffice/index', { title: 'Backoffice Index' });
+};
+
+exports.beerList = function(req, res) {
+  BeerController.beerList()
+  .then(function (data) {
+    res.status(201).json(data);
+  },
+  function(err) {
+    // TODO handle this error
+    res.status(418).json({ message: err });
+  });
+};
+
+exports.beerPreview = function(req, res) {
+  res.render('views/backoffice/beer-preview', { title: 'Beer preview' });
+};
+
+exports.setVisibility = function(req, res) {
+  BeerController.setVisibility(req.params.beerId, req.body.visibility)
+  .then(function (data) {
+    res.status(201).json(data);
+  },
+  function(err) {
+    // TODO handle this error
+    res.status(418).json({ message: err });
+  });
 };
 
 /*
@@ -18,7 +44,7 @@ exports.editBeer = function(req, res) {
   } else {
     BeerController.registerBeer(req.body)
     .then(function (data) {
-      res.status(201).json({ message: data });
+      res.status(201).json(data);
     },
     function(err) {
       // TODO handle this error
@@ -30,7 +56,7 @@ exports.editBeer = function(req, res) {
 exports.registerBeerImage = function(req,res) {
   BeerController.registerBeerImage(req.file)
   .then(function (data) {
-    res.status(201).json({ message: data });
+    res.status(201).json(data);
   },
   function(err) {
     // TODO handle this error

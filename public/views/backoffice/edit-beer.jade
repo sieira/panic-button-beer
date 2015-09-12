@@ -1,6 +1,6 @@
 .panel.panel-default
   .panel-heading Add a new beer, dear
-  form.panel-body(name='form', ng-init='beer = {new: true, visible: true}', novalidate)
+  form.panel-body(name='form', ng-init='if(!beer) beer = {new: true, visible: true}', novalidate)
   
     alert.alert-danger(ng-show='form.$submitted && form.name.$error.required') #[.fa.fa-exclamation-triangle] Beer name is required
     alert.alert-danger(ng-show='form.$submitted && form.file.$error.required') #[.fa.fa-exclamation-triangle] Beer image is required

@@ -1,9 +1,12 @@
 .row
-  .figure.col-sm-5
+  h1.text-center(style = 'white-space: pre;')
+    | Votre bière est {{ beer.name | uppercase }}
+    | de la brasserie Anadir campo
+.row
+  .figure.col-xs-5
     img.img-responsive(ng-src='data:image/jpeg;base64,{{ image }}')
 
-  .description.col-sm-7
-    h1 {{beer.name}}
+  .description.col-xs-7
     div(ng-bind-html='beer.description | html')
     .label.label-warning(ng-show='{{ beer.new }}') NOUVEAU !
 

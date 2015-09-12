@@ -42,7 +42,6 @@ exports.productDetail = function(req, res) {
 };
 
 exports.beerImage = function(req, res) {
-  console.log(req.params);
   BeerController.getBeerImage(req.params.beerId)
   .then(function (data) {
     res.status(200).json(data);

@@ -5,6 +5,33 @@ var q = require('q'),
     Beer = require('../models/beer'),
     BeerImage = require('../models/beer-image');
 
+
+exports.beerList = function() {
+  var deferred = q.defer();
+
+  Beer.find({}, function(err, data) {
+    if(err) {
+      deferred.reject(err);
+    } else {
+      deferred.resolve(data);
+    }
+  });
+  return deferred.promise;
+};
+
+exports.setVisibility = function(id, visibility) {
+  var deferred = q.defer();
+
+  Beer.update({ _id : id }, { visible: visibility }, function(err, data) {
+    if(err) {
+      deferred.reject(err);
+    } else {
+      deferred.resolve(data);
+    }
+  });
+  return deferred.promise;
+};
+
 /*
  * POST register beer
  */
@@ -20,7 +47,7 @@ exports.registerBeer = function(item) {
       deferred.resolve(data._id);
     }
 	});
-  return deferred.promise
+  return deferred.promise;
 };
 
 /*
@@ -39,19 +66,19 @@ exports.registerBeerImage = function(image) {
       deferred.resolve(data._id);
     }
 	});
-  return deferred.promise
+  return deferred.promise;
 };
 
 exports.getRandomBeer = function() {
   var deferred = q.defer();
 
-  Beer.count(function(err,count) {
+  Beer.count({ visible: true }, function(err,count) {
     if(err) {
       deferred.reject(err);
     } else {
       var rand = Math.floor(Math.random() * count);
 
-      Beer.findOne().skip(rand).exec(function(err, beer) {
+      Beer.findOne({ visible: true }).skip(rand).exec(function(err, beer) {
         beer.description = marked(beer.description);
         deferred.resolve(beer);
       });
