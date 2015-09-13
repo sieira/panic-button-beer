@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-  var app = angular.module('eltast-controllers', ['ui.bootstrap', 'angularFileUpload', 'timer'])
+  var app = angular.module('eltast-controllers', ['eltast-services', 'ui.bootstrap', 'angularFileUpload', 'timer'])
 
   .filter('html', ['$sce', function ($sce) {
       return function (text) {
@@ -20,7 +20,7 @@
      */
   }])
 
-  .controller('backofficeController', ['$log', '$rootScope', '$scope', '$http', function($log, $rootScope, $scope, $http) {
+  .controller('backofficeController', ['$log', '$rootScope', '$scope', '$http', '$location', 'beerEditionService', function($log, $rootScope, $scope, $http, $location, beerEditionService) {
     $rootScope.showHeader = true;
 
     $http.get('beer-list')
@@ -29,9 +29,14 @@
     }, function(err) {
       $log.error('Error getting beer list', err);
     });
+
+    $scope.createBeer = function() {
+      beerEditionService.prepareToCreate();
+      $location.path('edit-beer');
+    };
   }])
 
-  .controller('beerPreviewController', ['$log', '$scope', '$http', function($log, $scope, $http) {
+  .controller('beerPreviewController', ['$log', '$scope', '$http', '$location', 'beerEditionService', function($log, $scope, $http, $location, beerEditionService) {
     $scope.switchVisibility = function() {
       $http.post('set-visibility/' + $scope.beer._id, { visibility : !$scope.beer.visible })
       .then(function(response) {
@@ -40,7 +45,12 @@
       }, function(err) {
         $log.error('Error setting visibility', err);
       });
-    }
+    };
+
+    $scope.editBeer = function() {
+      beerEditionService.prepareToEdit($scope.beer);
+      $location.path('edit-beer');
+    };
   }])
 
   .controller('productDetailController', ['$log', '$rootScope', '$scope', '$http', '$window', function($log, $rootScope, $scope, $http, $window) {
@@ -70,12 +80,16 @@
     });
   }])
 
-  .controller('editBeerController', ['$log', '$rootScope', '$scope', '$http', 'FileUploader', function($log, $rootScope, $scope, $http, FileUploader) {
+  .controller('editBeerController', ['$log', '$rootScope', '$scope', '$http', 'FileUploader', 'beerEditionService', function($log, $rootScope, $scope, $http, FileUploader, beerEditionService) {
     $rootScope.showHeader = true;
 
     $.fn.bootstrapSwitch.defaults.onText = 'YES';
   	$.fn.bootstrapSwitch.defaults.offText = 'NO';
   	$.fn.bootstrapSwitch.defaults.size = 'mini';
+
+    $scope.beer = beerEditionService.getBeer();
+
+    // TODO preload the registered image if beer is not {} or has an _id
 
   	angular.element(":checkbox").bootstrapSwitch();
 

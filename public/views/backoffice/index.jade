@@ -1,5 +1,5 @@
 // TODO usa fa-stack con el fa-circle y el fa-beer
-a.btn.btn-warning(href='#/edit-beer') #[.fa.fa-plus] #[.fa.fa-beer] Ajouter une bière
+.btn.btn-warning(ng-click='createBeer()') #[.fa.fa-plus] #[.fa.fa-beer] Ajouter une bière
 
 ul.list-group
   li.list-group-item(ng-repeat='beer in beerList')
