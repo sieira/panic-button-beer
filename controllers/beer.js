@@ -39,6 +39,8 @@ exports.registerBeer = function(item) {
   var deferred = q.defer();
 	var beer = new Beer(item);
 
+console.log(item);
+
   // Register new beer
   beer.save(function(err, data) {
     if(err) {
@@ -53,6 +55,7 @@ exports.registerBeer = function(item) {
 /*
  * POST register beer
  */
+ //TODO esto no esta functionando
 exports.registerBeerImage = function(image) {
   var deferred = q.defer();
   console.log(image);
@@ -61,8 +64,10 @@ exports.registerBeerImage = function(image) {
   // Register new beer
   beerImage.save(function(err, data) {
     if(err) {
+      console.log(err);
       deferred.reject(err);
     } else {
+      console.log(data);
       deferred.resolve(data._id);
     }
 	});

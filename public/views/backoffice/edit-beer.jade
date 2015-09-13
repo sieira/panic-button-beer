@@ -25,11 +25,5 @@
     .form-group(ng-class='{"has-error": (form.price.$dirty && form.price.$invalid)}')
       label(for='price') Price
       input.form-control(name='price', ng-model='beer.price', type='number', required)
-    .form-group
-      input.form-control(name='new', ng-model='beer.new', type='checkbox', checked)
-      label(for='new') New
-    .form-group
-      input.form-control(name='visible', ng-model= 'beer.visible', type='checkbox')
-      label(for='wisible') Visible
     
     button.btn.btn-default(type = 'submit', ng-click='editBeer(beer)') #[i.fa.fa-check] Add Beer

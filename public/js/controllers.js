@@ -82,16 +82,9 @@
 
   .controller('editBeerController', ['$log', '$rootScope', '$scope', '$http', 'FileUploader', 'beerEditionService', function($log, $rootScope, $scope, $http, FileUploader, beerEditionService) {
     $rootScope.showHeader = true;
-
-    $.fn.bootstrapSwitch.defaults.onText = 'YES';
-  	$.fn.bootstrapSwitch.defaults.offText = 'NO';
-  	$.fn.bootstrapSwitch.defaults.size = 'mini';
-
     $scope.beer = beerEditionService.getBeer();
 
     // TODO preload the registered image if beer is not {} or has an _id
-
-  	angular.element(":checkbox").bootstrapSwitch();
 
     var uploader = $scope.uploader = new FileUploader({
       url: 'register-beer-image'
@@ -120,8 +113,9 @@
 
       uploader.queue[0].upload();
 
+      // TODO if image fails to upload
       uploader.onSuccessItem = function(item, response, status, headers) {
-        beer.img = response.message;
+        beer.img = response;
 
         $http.post('edit-beer', beer)
           .then(function(response) {
@@ -138,8 +132,7 @@
       };
 
       uploader.onErrorItem = function(item, response, status, headers) {
-        console.log('ERROR !');
-        console.log(response);
+        $log.error('An error uploading the image :' + response.message);
       };
     }
   }]);

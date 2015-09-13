@@ -1,4 +1,9 @@
-h1 {{ beer.name }}
-#[i.visible.fa.fa-2x(ng-click='switchVisibility()' ng-class='{ "fa-eye text-success": beer.visible, "fa-eye-slash": !beer.visible }')]
-#[.fa.fa-pencil.fa-2x(ng-click='editBeer()')]
-#[i.fa.fa-trash-o.fa-2x]
+.row
+  .col-xs-6
+    .btn-group
+      .btn #[i.visible.fa.fa-2x(ng-click='switchVisibility()' ng-class='{ "fa-eye text-success": beer.visible, "fa-eye-slash": !beer.visible }')]
+      #[span.h1.noselect {{ beer.name }}]
+  .col-xs-6.text-right
+    .btn-group
+      .btn #[.fa.fa-pencil.fa-2x(ng-click='editBeer()')]
+      .btn #[i.fa.fa-trash-o.fa-2x]

@@ -16,7 +16,7 @@
 			})
 			.when('/product-detail', {
 				templateUrl : '/product-detail',
-				controller  : 'productDetailController',
+				controller  : 'productDetailController'/*,
 				resolve: {
 					//TODO preload the detail
 					// http://stackoverflow.com/questions/11972026/delaying-angularjs-route-change-until-model-loaded-to-prevent-flicker
@@ -25,7 +25,7 @@
 						$timeout(delay.resolve, 1000);
 						return delay.promise;
 					}
-				}
+				}*/
 			})
 			.when('/admin', {
 				templateUrl : '/admin',
