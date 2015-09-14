@@ -24,21 +24,32 @@ exports.panicButton = function(req, res) {
 };
 
 /**
- * GET product-detail view
+ * GET beer-detail view
  */
-exports.productDetail = function(req, res) {
+exports.beerDetail = function(req, res) {
     if(req.method === "GET") {
-      res.render('views/product-detail', { title: 'Beer' });
+      res.render('views/beer-detail', { title: 'Beer' });
     } else {
-      BeerController.getRandomBeer()
+      BeerController.getBeer(req.beerId)
       .then(function (data) {
-        res.status(200).json({ message: data });
+        res.status(200).json(data);
       },
       function(err) {
         // TODO handle this error
         res.status(418).json({ message: err });
       });
     }
+};
+
+exports.randomBeer = function(req, res) {
+  BeerController.getRandomBeer()
+  .then(function (data) {
+    res.status(200).json(data);
+  },
+  function(err) {
+    // TODO handle this error
+    res.status(418).json({ message: err });
+  });
 };
 
 exports.beerImage = function(req, res) {

@@ -14,9 +14,10 @@
 				templateUrl : '/panic-button',
 				controller  : 'mainController'
 			})
-			.when('/product-detail', {
-				templateUrl : '/product-detail',
-				controller  : 'productDetailController'/*,
+			.when('/beer-detail', {
+				templateUrl : '/beer-detail',
+				controller  : 'productDetailController'
+				/*,
 				resolve: {
 					//TODO preload the detail
 					// http://stackoverflow.com/questions/11972026/delaying-angularjs-route-change-until-model-loaded-to-prevent-flicker

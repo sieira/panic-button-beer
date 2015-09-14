@@ -12,6 +12,7 @@
   "devDependencies": {
     "chai": "^3.2.0",
     "mocha": "^2.3.2",
+    "mocha-mongoose": "^1.1.0",
     "morgan": "^1.6.1",
     "nodemon": "^1.4.1",
     "request": "^2.61.0"

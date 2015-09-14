@@ -2,16 +2,23 @@
   .panel-heading Add a new beer, dear
   form.panel-body(name='form', novalidate)
   
-    alert.alert-danger(ng-show='form.$submitted && form.name.$error.required') #[.fa.fa-exclamation-triangle] Beer name is required
-    alert.alert-danger(ng-show='form.$submitted && form.file.$error.required') #[.fa.fa-exclamation-triangle] Beer image is required
-    alert.alert-danger(ng-show='form.$submitted && form.file.$error.valid_file') #[.fa.fa-exclamation-triangle] The file has to be an image
+    alert.alert-danger(ng-show='form.$submitted && form.name.$error.required') #[.fa.fa-exclamation-triangle] Le champ nom est obligatoire
+    alert.alert-danger(ng-show='form.$submitted && form.brewery.$error.required') #[.fa.fa-exclamation-triangle] Le champ brasserie est obligatoire
+    alert.alert-danger(ng-show='form.$submitted && form.file.$error.required') #[.fa.fa-exclamation-triangle] Veuillez selectionner une image
+    alert.alert-danger(ng-show='form.$submitted && form.file.$error.valid_file') #[.fa.fa-exclamation-triangle] Le fichier doit être une image
     alert.alert-danger(ng-show='form.$submitted && form.description.$error.required') #[.fa.fa-exclamation-triangle] Beer description is required
+    alert.alert-danger(ng-show='form.$submitted && form.kind.$error.required') #[.fa.fa-exclamation-triangle] Le type de bière est obligatoire
     alert.alert-danger(ng-show='form.$submitted && form.price.$error.required') #[.fa.fa-exclamation-triangle] Beer price is required
     alert.alert-danger(ng-show='form.$submitted && form.price.$error.number') #[.fa.fa-exclamation-triangle] The price is not a valid number
+    alert.alert-danger(ng-show='form.$submitted && form.alcohol.$error.required') #[.fa.fa-exclamation-triangle] La quantité d'alcool est obligatoire
+    alert.alert-danger(ng-show='form.$submitted && form.alcohol.$error.number') #[.fa.fa-exclamation-triangle] La donnée introduite n'est pas un numéro valable
     
     .form-group(ng-class='{"has-error": (form.name.$dirty && form.name.$invalid)}')
-      label(for='name') Name
+      label(for='name') Nom
       input.form-control(name='name', ng-model='beer.name', type='text', required)
+    .form-group(ng-class='{"has-error": (form.brewery.$dirty && form.brewery.$invalid)}')
+      label(for='brewery') Brasserie
+      input.form-control(name='brewery', ng-model='beer.brewery', type='text', required)
     .form-group
       label(for='file') Photo
       input(name='file', ng-model='beer.file', type='file', valid-file, accept='image/*', nv-file-select='' uploader='uploader')
@@ -20,10 +27,17 @@
       p.help-block Gimme a file, not so big, and well proportioned
     .form-group(ng-class='{"has-error": (form.description.$dirty && form.description.$invalid)}')
       label(for='description') Description
-      textarea.form-control(name='description', ng-model='beer.description', rows = '10', required)
+      textarea.form-control(name='description', ng-model='beer.description', rows = '7', required)
       p.help-block Use MD format
+    .form-group(ng-class='{"has-error": (form.kind.$dirty && form.kind.$invalid)}')
+      label(for='kind') Type
+      textarea.form-control(name='kind', ng-model='beer.kind', rows = '7', required)
+      p.help-block Use MD format
+    .form-group(ng-class='{"has-error": (form.alcohol.$dirty && form.alcohol.$invalid)}')
+      label(for='alcohol') Volume d'alcool
+      input.form-control(name='alcohol', ng-model='beer.alcohol', type='number', required)
     .form-group(ng-class='{"has-error": (form.price.$dirty && form.price.$invalid)}')
-      label(for='price') Price
+      label(for='price') Prix
       input.form-control(name='price', ng-model='beer.price', type='number', required)
-    
+      
     button.btn.btn-default(type = 'submit', ng-click='editBeer(beer)') #[i.fa.fa-check] Add Beer

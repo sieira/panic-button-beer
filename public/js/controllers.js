@@ -56,9 +56,9 @@
   .controller('productDetailController', ['$log', '$rootScope', '$scope', '$http', '$window', function($log, $rootScope, $scope, $http, $window) {
     $rootScope.showHeader = true;
 
-    $http.post('product-detail', {})
+    $http.post('beer-detail', {})
     .then(function(response) {
-      var beer = $scope.beer = response.data.message;
+      var beer = $scope.beer = response.data;
 
       $http.get('beer-image/'+ beer.img, {})
       .then(function(response) {

@@ -22,6 +22,8 @@ exports.beerList = function() {
 exports.setVisibility = function(id, visibility) {
   var deferred = q.defer();
 
+  console.log(id + ' ' + visibility);
+
   Beer.update({ _id : id }, { visible: visibility }, function(err, data) {
     if(err) {
       deferred.reject(err);
@@ -82,6 +84,20 @@ exports.getRandomBeer = function() {
         beer.description = marked(beer.description);
         deferred.resolve(beer);
       });
+    }
+  });
+
+  return deferred.promise;
+}
+
+exports.getBeer = function(beerId) {
+  var deferred = q.defer();
+
+  Beer.findOne({ _id: beerId }, function(err, beer) {
+    if(err) {
+      deferred.reject(err);
+    } else {
+      deferred.resolve(beer);
     }
   });
 

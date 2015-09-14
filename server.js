@@ -5,7 +5,6 @@
 * Dependencies
 */
 var express = require('express'),
-    mongoose = require('mongoose'),
     path = require('path'),
     logger = require('morgan')('combined'),
     routes = require('./routes'),
@@ -23,13 +22,16 @@ var app = express(),
 router = express.Router(),
 upload = multer({ storage: multer.memoryStorage() });
 
-mongoose.connect('mongodb://localhost/eltast');
-
 app.set('port', port);
 app.set('views', path.join(__dirname,'/public'));
 app.set('view engine', 'jade');
 
+// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }));
+
+// parse application/json
+app.use(bodyParser.json());
+
 app.use(logger);
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'bower_components')));
@@ -39,8 +41,9 @@ app.get('/admin', backoffice.index);
 
 app.get('/panic-button', routes.panicButton);
 
-app.get('/product-detail', routes.productDetail);
-app.post('/product-detail', routes.productDetail);
+app.get('/beer-detail', routes.beerDetail);
+app.post('/beer-detail', routes.randomBeer);
+app.post('/beer-detail/:beerId', routes.beerDetail);
 
 app.get('/beer-list', backoffice.beerList);
 app.get('/beer-preview', backoffice.beerPreview);
