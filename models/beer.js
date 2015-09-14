@@ -11,13 +11,15 @@ var BeerSchema = new Schema({
     unique: true,
     required: true
   },
+  brewery: String, //This could be an independent entity
   img: { type: Schema.Types.ObjectId, ref: 'BeerImage', unique: true },
   description: String,
+  kind: String,
+  alcohol: Number,
   price: Number,
-  new: { type: Boolean, default: true },
   visible: { type: Boolean, default: false },
-  // Weight for probability
-  weight: { type: Number, default: 1 }
+  weight: { type: Number, default: 1 },
+  createdAt: { type: Date, default: Date.now } // Weight for probability
 });
 
 // Export the Mongoose model

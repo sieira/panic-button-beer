@@ -13,7 +13,8 @@
     "chai": "^3.2.0",
     "mocha": "^2.3.2",
     "morgan": "^1.6.1",
-    "nodemon": "^1.4.1"
+    "nodemon": "^1.4.1",
+    "request": "^2.61.0"
   },
   "dependencies": {
     "body-parser": "^1.13.3",

@@ -35,13 +35,11 @@ exports.setVisibility = function(id, visibility) {
 /*
  * POST register beer
  */
-exports.registerBeer = function(item) {
+exports.editBeer = function(item) {
   var deferred = q.defer();
 	var beer = new Beer(item);
 
-console.log(item);
-
-  // Register new beer
+  // Register or update beer
   beer.save(function(err, data) {
     if(err) {
       deferred.reject(err);
@@ -55,19 +53,16 @@ console.log(item);
 /*
  * POST register beer
  */
- //TODO esto no esta functionando
-exports.registerBeerImage = function(image) {
+ exports.registerBeerImage = function(image) {
   var deferred = q.defer();
-  console.log(image);
+
 	var beerImage = new BeerImage({ img: { data: image.buffer } });
 
   // Register new beer
   beerImage.save(function(err, data) {
     if(err) {
-      console.log(err);
       deferred.reject(err);
     } else {
-      console.log(data);
       deferred.resolve(data._id);
     }
 	});

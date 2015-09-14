@@ -42,7 +42,7 @@ exports.editBeer = function(req, res) {
   if(req.method === "GET") {
     res.render('views/backoffice/edit-beer', { title: 'Edit your beer, dude' });
   } else {
-    BeerController.registerBeer(req.body)
+    BeerController.editBeer(req.body)
     .then(function (data) {
       res.status(201).json(data);
     },

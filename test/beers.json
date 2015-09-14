@@ -1,0 +1,47 @@
+[
+  {
+    "name": "Mahou clasica",
+    "brewery": "Mahou-San Miguel",
+    "img": null,
+    "description": "Es indudablemente el mejor producto jamás creado por el ser humano. El concepto es la cuestión, tú lo sabes, yo lo sé, nosotros lo sabemos... es hora de que ellos también lo sepan.\n## La pajara pinta\nEstaba la pájara pinta sentadita en su verde limón. Con el pico picaba la hoja, con la hoja picaba la flor",
+    "kind": "Pilsen",
+    "alcohol": 4.8,
+    "price": 1.5
+  },
+  {
+    "name": "Lager DIA%",
+    "brewery": "Bavaria Brouwerij",
+    "img": null,
+    "description": "Un manjar de dioses; el néctar del olimpo envasado en un ánfora de 33cl de puro latón, nada puede anadirse ante tal majestuosidad si no es que su misterioso sabor a cacahuete indica que algo chungo hay en la receta",
+    "kind": "Pale lager",
+    "alcohol": 4.7,
+    "price": 0.35
+  },
+  {
+    "name": "Cruzcampo",
+    "brewery": "Heineken España",
+    "img": null,
+    "description": "Es probablemente la cosa más repugnante que se pueda uno echar a la boca, compuesta de orines de rata finamente fermentados a la sombra de la giralda, sólo puede agradar a un paladar sometido a 50º a la sombra entre siesta y siesta",
+    "kind": "Pilsen",
+    "alcohol": 4.7,
+    "price": 1
+  },
+  {
+    "name": "Heineken",
+    "brewery": "Heineken International",
+    "img": null,
+    "description": "Una cerveza que hace pensar en verde que tiene entre sus usos medicinales el tratamiento de los gargajos verdes de los viejos verdes, y que a nivel culinario supone el complemento ideal de las ensaladas verdes",
+    "kind": "Pils",
+    "alcohol": 5,
+    "price": 1
+  },
+  {
+    "name": "Steinburg",
+    "brewery": "Hacendado corporation",
+    "img": null,
+    "description": "Lorem Ipsum dolor sit amet, consectetur adipiscing elit. Nam et turpis a enim eleifend lobortis quis nec massa. Vestibulum id justo mauris. Sed non mi quis neque iaculis imperdiet eu eu nisi. Morbi imperdiet, dui vitae luctus hendrerit, diam libero viverra diam, non dapibus mi nibh maximus magna.\nDonec odio mauris ullamcorper nec tortor et, pellentesque sagittis turpis. Etiam facilisis hendrerit turpis, at pulvinar est ullamcorper et. Nulla quis velit velit. Phasellus id molestie risus, vel ullamcorper velit. Vivamus fermentum vulputate augue, ut condimentum dolor euismod vel.\nCras libero tellus tincidunt sit amet orci eget, feugiat bibendum justo. Sed mollis gravida urna vitae ullamcorper. Ut tempor massa eu auctor pharetra. Ut feugiat leo elit, non ornare ex consectetur non. Mauris commodo pharetra mattis. Cras porta enim non mi fermentum finibus. Integer ut velit placerat, ultricies ante iaculis, feugiat ante.",
+    "kind": "Pale lager con cancamusa",
+    "alcohol": 4.8,
+    "price": 0.25
+  }
+]
