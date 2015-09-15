@@ -64,8 +64,19 @@ exports.deleteBeer = function(req, res) {
     });
 };
 
+exports.undeleteBeer = function(req, res) {
+    BeerController.undeleteBeer(req.params.beerId)
+    .then(function(data) {
+      res.status(200).json(data);
+    })
+    .fail(function(err) {
+      // TODO handle this error
+      res.status(418).json({ message: err });
+    });
+};
+
 exports.registerBeerImage = function(req,res) {
-  BeerController.registerBeerImage(req.file)
+  BeerController.registerBeerImage(req.file, req.body.id)
   .then(function(data) {
     res.status(201).json(data);
   })

@@ -2,9 +2,12 @@
 
 var q = require('q'),
     marked = require('marked'),
+    moment = require('moment'),
     Beer = require('../models/beer'),
     BeerImage = require('../models/beer-image');
 
+
+var gracePeriod = { n: 10, unit: 'years'};
 
 exports.beerList = function() {
   var deferred = q.defer();
@@ -53,10 +56,14 @@ exports.editBeer = function(item) {
 /*
  * POST register beer
  */
- exports.registerBeerImage = function(image) {
+ exports.registerBeerImage = function(image, id) {
   var deferred = q.defer();
 
 	var beerImage = new BeerImage({ img: { data: image.buffer } });
+
+  if(id) {
+    beerImage._id = id;
+  }
 
   // Register new beer
   beerImage.save(function(err, data) {
@@ -108,7 +115,7 @@ exports.getBeer = function(beerId) {
 exports.getBeerImage = function(id) {
   var deferred = q.defer();
 
-  BeerImage.findOne({ _id : id }).exec(function(err, beerImage) {
+  BeerImage.findOne({ _id : id }, function(err, beerImage) {
     if(err) {
       deferred.reject(err);
     } else {
@@ -120,10 +127,27 @@ exports.getBeerImage = function(id) {
   return deferred.promise;
 };
 
+/**
+ * Requests mongoDB to delete the image after gracePeriod time
+ */
 exports.deleteBeerImage = function(id) {
   var deferred = q.defer();
 
-  BeerImage.findOneAndRemove({ _id : id }).exec(function(err, data) {
+  BeerImage.update({ _id : id }, { expireAt: moment().add(gracePeriod.n, gracePeriod.unit) }, function(err, data) {
+    if(err) {
+      deferred.reject(err);
+    } else {
+      deferred.resolve(data);
+    }
+  });
+
+  return deferred.promise;
+};
+
+exports.undeleteBeerImage = function(id) {
+  var deferred = q.defer();
+
+  BeerImage.update({ _id : id }, { $unset: { expireAt: 1 } }, function(err, data) {
     if(err) {
       deferred.reject(err);
     } else {
@@ -135,21 +159,44 @@ exports.deleteBeerImage = function(id) {
 };
 
 /**
- * Deletes a beer and it's associated image, and returns an object containing both
+ * Requests mongoDB to delete the beer and it's associated image after gracePeriod time
  */
 exports.deleteBeer = function(id) {
   var deferred = q.defer();
-  var result;
 
-  Beer.findOneAndRemove({ _id: id }, function(err,removedBeer) {
-    if(err) return deferred.reject(err);
-    result.beer = removedBeer;
+  Beer.findByIdAndUpdate({ _id: id }, { expireAt: moment().add(gracePeriod.n, gracePeriod.unit) }, { new: true }, function(err, beer) {
+    if(err) {
+      deferred.reject(err);
+    }
 
-    BeerImage.findOneAndRemove({_id: removedBeer.img }, function(err,removedBeerImage) {
-      if(err) return deferred.reject(err);
-      result.beerImage = removedBeerImage;
-      deferred.resolve(result);
+    exports.deleteBeerImage(beer.img)
+    .then(function(data) {
+      deferred.resolve(beer);
     })
+    .fail(function(err) {
+      deferred.reject(err)
+    });
+  });
+
+  return deferred.promise;
+};
+
+exports.undeleteBeer = function(id) {
+  var deferred = q.defer();
+
+  Beer.findByIdAndUpdate({ _id: id }, { $unset: { expireAt: 1 }}, { new: true }, function(err, beer) {
+    if(err) {
+      deferred.reject(err);
+      return;
+    }
+
+    exports.undeleteBeerImage(beer.img)
+    .then(function(data) {
+      deferred.resolve(beer);
+    })
+    .fail(function(err) {
+      deferred.reject(err)
+    });
   });
 
   return deferred.promise;

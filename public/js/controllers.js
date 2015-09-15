@@ -40,7 +40,6 @@
     $scope.switchVisibility = function() {
       $http.post('set-visibility/' + $scope.beer._id, { visibility : !$scope.beer.visible })
       .then(function(response) {
-        $log.debug('Response', response);
         $scope.beer.visible = !$scope.beer.visible;
       }, function(err) {
         $log.error('Error setting visibility', err);
@@ -50,6 +49,24 @@
     $scope.editBeer = function() {
       beerEditionService.prepareToEdit($scope.beer);
       $location.path('edit-beer');
+    };
+
+    $scope.deleteBeer = function() {
+      $http.delete('delete-beer/' + $scope.beer._id)
+      .then(function(response) {
+        $scope.beer.expireAt = response.data.expireAt;
+      }, function(err) {
+        $log.error('Error deleting beer', err);
+      });
+    };
+
+    $scope.undeleteBeer = function() {
+      $http.post('undelete-beer/' + $scope.beer._id)
+      .then(function(response) {
+        $scope.beer.expireAt = response.data.expireAt;
+      }, function(err) {
+        $log.error('Error restoring beer', err);
+      });
     };
   }])
 

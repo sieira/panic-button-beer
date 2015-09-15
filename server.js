@@ -52,6 +52,7 @@ app.post('/set-visibility/:beerId', backoffice.setVisibility);
 app.get('/edit-beer', backoffice.editBeer);
 app.post('/edit-beer', backoffice.editBeer);
 app.delete('/delete-beer/:beerId', backoffice.deleteBeer);
+app.post('/undelete-beer/:beerId', backoffice.undeleteBeer);
 
 
 app.post('/register-beer-image', upload.single('file'), backoffice.registerBeerImage);
@@ -61,8 +62,8 @@ app.get('*', routes._404);
 
 
 // Start it up!
-function start() {
-  server = app.listen(app.get('port'), function() {
+function start(port) {
+  server = app.listen(port || app.get('port'), function() {
     console.log('Express server listening on port ' + app.get('port'));
   });
 }

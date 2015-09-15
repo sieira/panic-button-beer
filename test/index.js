@@ -9,7 +9,7 @@ var should = require('chai').should(),
     mocha_mongoose = require('mocha-mongoose');
 
 var hostname = 'localhost',
-    port = 8080;
+    port = 1234;
 
 var dbURI = 'mongodb://localhost/eltast';
 
@@ -22,6 +22,7 @@ describe('# Backend', function() {
     var beers,
         beerImages,
         beerId,
+        beerImageId,
         deletedBeer;
 
     before(function(done) {
@@ -29,7 +30,7 @@ describe('# Backend', function() {
     });
 
     before(function(done) {
-      server.start();
+      server.start(port);
       done();
     });
 
@@ -68,11 +69,14 @@ describe('# Backend', function() {
           res.statusCode.should.equal(201);
         })
         .on('error', function(e) {
-          should.fail(0,1,'Problem registaring image: ' + e.message);
+          should.fail(0,1,'Problem registering image: ' + e.message);
         })
         .on('data', function(data) {
           beers[index].img = JSON.parse(data);
-          if (--n === 0) done(); // Exit the test when all images have been inserted
+          if (--n === 0) {
+            beerImageId = JSON.parse(data);
+            done(); // Exit the test when all images have been inserted
+          }
         })
         .form().append('file', new Buffer(beerImage, 'base64'), { filename: 'test', contentType: 'image/*' });
       });
@@ -97,8 +101,10 @@ describe('# Backend', function() {
           should.fail(0,1,'Problem registering beer: ' + e.message);
         })
         .on('data', function(data) {
-          beerId = JSON.parse(data);
-          if(--n === 0) done(); // Exit the test when all beers have been inserted
+          if(--n === 0) {
+            beerId = JSON.parse(data);
+            done(); // Exit the test when all beers have been inserted
+          };
         });
       });
     });
@@ -142,28 +148,46 @@ describe('# Backend', function() {
       });
     });
 
-    if('Should delete a beer, retrieve the deleted beer and it\'s associated image', function(done) {
+    it('Should mark a beer for deletion', function(done) {
       var options = {
         uri: 'http://' + hostname + ':' + port  + '/delete-beer/' + beerId,
         encoding: 'utf8'
       };
 
       request
-      .delete(options)
+      .del(options)
+      .on('response', function(res) {
+        var body ='';
+
+        res.statusCode.should.equal(200);
+
+        res
+        .on('data', function(data) {
+          should.exist(JSON.parse(data).expireAt);
+          done();
+        })
+      })
+      .on('error', function(e) {
+        should.fail(0,1,'Problem deleting beer : ' + e.message);
+      });
+    });
+
+    it('Should be able to cancel the beer\'s deletion', function(done) {
+      var options = {
+        uri: 'http://' + hostname + ':' + port  + '/undelete-beer/' + beerId
+      };
+
+      request.post(options)
       .on('response', function(res) {
         res.statusCode.should.equal(200);
       })
       .on('error', function(e) {
-        should.fail(0,1,'Problem deleting beer : ' + e.message);
+        should.fail(0,1,'Problem restoring beer: ' + e.message);
       })
       .on('data', function(data) {
-
+        JSON.parse(data)._id.should.equal(beerId);
+        done();
       });
-      should.fail(0,1,'Test not implemented');
-    });
-
-    if('Should be able to reinsert the beer', function(done) {
-      should.fail(0,1,'Test not implemented');
     });
   });
 });

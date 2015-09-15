@@ -1,5 +1,13 @@
 // TODO usa fa-stack con el fa-circle y el fa-beer
-.btn.btn-warning(ng-click='createBeer()') #[.fa.fa-plus] #[.fa.fa-beer] Ajouter une bière
+nav.navbar.navbar-default
+  .container-fluid
+    ul.nav.navbar-nav
+      li #[a(href='' ng-click='createBeer()') #[.fa.fa-plus] #[.fa.fa-beer] Nouvelle bière]
+        
+    .navbar-form.navbar-right(role='search')
+      .input-group
+        span.input-group-addon #[.fa.fa-search]
+        input.form-control(type='text', placeholder='Recherche')
 
 ul.list-group
   li.list-group-item(ng-repeat='beer in beerList')

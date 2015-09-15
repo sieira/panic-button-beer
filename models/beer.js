@@ -18,9 +18,12 @@ var BeerSchema = new Schema({
   alcohol: Number,
   price: Number,
   visible: { type: Boolean, default: false },
-  weight: { type: Number, default: 1 },
-  createdAt: { type: Date, default: Date.now } // Weight for probability
+  weight: { type: Number, default: 1 }, // Weight for probability
+  createdAt: { type: Date, default: Date.now },
+  expireAt: { type: Date, default: undefined }
 });
+
+BeerSchema.index({ "expireAt": 1 }, { expireAfterSeconds: 0 });
 
 // Export the Mongoose model
 module.exports = mongoose.model('Beer', BeerSchema);
