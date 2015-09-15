@@ -6,8 +6,8 @@ var q = require('q'),
     Beer = require('../models/beer'),
     BeerImage = require('../models/beer-image');
 
-
-var gracePeriod = { n: 10, unit: 'years'};
+//TODO put in config file
+var gracePeriod = { n: 10, unit: 'minutes'};
 
 exports.beerList = function() {
   var deferred = q.defer();

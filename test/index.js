@@ -1,19 +1,21 @@
 'use strict'
 
+require('dotenv').load();
+
+var hostname = process.env.TEST_HOST,
+    port = process.env.TEST_PORT;
+
 var should = require('chai').should(),
     fs = require('fs'),
     request = require('request'),
-    server = require('../server'),
+    Server = require('../server'),
+    server = new Server({ port: port }),
     mongoose = require('mongoose'),
     querystring = require('querystring'),
     mocha_mongoose = require('mocha-mongoose');
 
-var hostname = 'localhost',
-    port = 1234;
-
-var dbURI = 'mongodb://localhost/eltast';
-
-var clearDB  = mocha_mongoose(dbURI,{ noClear : true });
+var dbURI = 'mongodb://'+ process.env.DB_HOST + '/' + process.env.TEST_DB,
+    clearDB  = mocha_mongoose(dbURI,{ noClear : true });
 
 mongoose.connect(dbURI);
 
@@ -30,7 +32,7 @@ describe('# Backend', function() {
     });
 
     before(function(done) {
-      server.start(port);
+      server.start();
       done();
     });
 

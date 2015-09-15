@@ -15,8 +15,7 @@
   .controller('mainController', ['$rootScope', function($rootScope) {
     $rootScope.showHeader = false;
     /*
-     * TODO
-     * Animate the button on click
+     * TODO Animate the button on click
      */
   }])
 
@@ -103,7 +102,6 @@
     $scope.beer = beerEditionService.getBeer();
 
     // TODO preload the registered image if beer is not {} or has an _id
-
     var uploader = $scope.uploader = new FileUploader({
       url: 'register-beer-image'
     });
@@ -131,25 +129,22 @@
 
       uploader.queue[0].upload();
 
-      // TODO if image fails to upload
       uploader.onSuccessItem = function(item, response, status, headers) {
         beer.img = response;
 
         $http.post('edit-beer', beer)
           .then(function(response) {
-            //TODO redirige a la lista de birras
+            //TODO redirect to admin index
             $log.debug('status', response);
           },
           function(err) {
             $log.error('Error editing beer', err);
-            /**
-              TODO
-              Delete the uploaded image
-             */
+            // TODO Delete the uploaded image
           });
       };
 
       uploader.onErrorItem = function(item, response, status, headers) {
+        //TODO inform the user
         $log.error('An error uploading the image :' + response.message);
       };
     }

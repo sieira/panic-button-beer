@@ -1,6 +1,5 @@
 'use strict';
 
-// TODO numeral lib will be used to convert between currency and Number for the price
 var mongoose = require('mongoose'),
     Schema = mongoose.Schema;
 
