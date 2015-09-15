@@ -54,6 +54,7 @@
     $scope.deleteBeer = function() {
       $http.delete('delete-beer/' + $scope.beer._id)
       .then(function(response) {
+        //TODO set a timer so the beer is removed from the list when it's expired
         $scope.beer.expireAt = response.data.expireAt;
       }, function(err) {
         $log.error('Error deleting beer', err);
@@ -63,7 +64,7 @@
     $scope.undeleteBeer = function() {
       $http.post('undelete-beer/' + $scope.beer._id)
       .then(function(response) {
-        $scope.beer.expireAt = response.data.expireAt;
+        delete $scope.beer.expireAt;
       }, function(err) {
         $log.error('Error restoring beer', err);
       });
