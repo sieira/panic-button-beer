@@ -3,8 +3,8 @@
 (function() {
   var app = angular.module('eltast-controllers', ['eltast-services', 'ui.bootstrap', 'angularFileUpload', 'timer'])
 
-  .filter('html', ['$sce', function ($sce) {
-      return function (text) {
+  .filter('html', ['$sce', function($sce) {
+      return function(text) {
           return $sce.trustAsHtml(text);
       };
   }])
@@ -74,7 +74,7 @@
     $scope.timerRunning = true;
     $scope.$broadcast('timer-start');
 
-    $scope.$on('timer-stopped', function (event, data){
+    $scope.$on('timer-stopped', function(event, data){
       //TODO wait until the end of the bar animation
       $window.location.href = '#/';
     });

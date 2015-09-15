@@ -21,7 +21,8 @@ describe('# Backend', function() {
   describe('# Database', function() {
     var beers,
         beerImages,
-        beerId;
+        beerId,
+        deletedBeer;
 
     before(function(done) {
       clearDB(done);
@@ -84,7 +85,7 @@ describe('# Backend', function() {
 
       var n = beers.length;
 
-      beers.forEach(function (beer, index) {
+      beers.forEach(function(beer, index) {
         var postData = querystring.stringify(beer);
 
         request.post(options)
@@ -139,6 +140,30 @@ describe('# Backend', function() {
         JSON.parse(data).visible.should.equal(true);
         done();
       });
+    });
+
+    if('Should delete a beer, retrieve the deleted beer and it\'s associated image', function(done) {
+      var options = {
+        uri: 'http://' + hostname + ':' + port  + '/delete-beer/' + beerId,
+        encoding: 'utf8'
+      };
+
+      request
+      .delete(options)
+      .on('response', function(res) {
+        res.statusCode.should.equal(200);
+      })
+      .on('error', function(e) {
+        should.fail(0,1,'Problem deleting beer : ' + e.message);
+      })
+      .on('data', function(data) {
+
+      });
+      should.fail(0,1,'Test not implemented');
+    });
+
+    if('Should be able to reinsert the beer', function(done) {
+      should.fail(0,1,'Test not implemented');
     });
   });
 });

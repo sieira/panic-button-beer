@@ -51,6 +51,7 @@ app.post('/set-visibility/:beerId', backoffice.setVisibility);
 
 app.get('/edit-beer', backoffice.editBeer);
 app.post('/edit-beer', backoffice.editBeer);
+app.delete('/delete-beer/:beerId', backoffice.deleteBeer);
 
 
 app.post('/register-beer-image', upload.single('file'), backoffice.registerBeerImage);

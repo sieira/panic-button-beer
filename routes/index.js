@@ -31,7 +31,7 @@ exports.beerDetail = function(req, res) {
       res.render('views/beer-detail', { title: 'Beer' });
     } else {
       BeerController.getBeer(req.params.beerId)
-      .then(function (data) {
+      .then(function(data) {
         res.status(200).json(data);
       },
       function(err) {
@@ -43,7 +43,7 @@ exports.beerDetail = function(req, res) {
 
 exports.randomBeer = function(req, res) {
   BeerController.getRandomBeer()
-  .then(function (data) {
+  .then(function(data) {
     res.status(200).json(data);
   },
   function(err) {
@@ -54,7 +54,7 @@ exports.randomBeer = function(req, res) {
 
 exports.beerImage = function(req, res) {
   BeerController.getBeerImage(req.params.beerId)
-  .then(function (data) {
+  .then(function(data) {
     res.status(200).json(data);
   },
   function(err) {

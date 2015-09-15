@@ -119,3 +119,38 @@ exports.getBeerImage = function(id) {
 
   return deferred.promise;
 };
+
+exports.deleteBeerImage = function(id) {
+  var deferred = q.defer();
+
+  BeerImage.findOneAndRemove({ _id : id }).exec(function(err, data) {
+    if(err) {
+      deferred.reject(err);
+    } else {
+      deferred.resolve(data);
+    }
+  });
+
+  return deferred.promise;
+};
+
+/**
+ * Deletes a beer and it's associated image, and returns an object containing both
+ */
+exports.deleteBeer = function(id) {
+  var deferred = q.defer();
+  var result;
+
+  Beer.findOneAndRemove({ _id: id }, function(err,removedBeer) {
+    if(err) return deferred.reject(err);
+    result.beer = removedBeer;
+
+    BeerImage.findOneAndRemove({_id: removedBeer.img }, function(err,removedBeerImage) {
+      if(err) return deferred.reject(err);
+      result.beerImage = removedBeerImage;
+      deferred.resolve(result);
+    })
+  });
+
+  return deferred.promise;
+};

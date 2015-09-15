@@ -6,11 +6,11 @@
   .factory("beerEditionService", function() {
     var beerEditionService = {};
 
-    beerEditionService.prepareToEdit = function (beer) {
+    beerEditionService.prepareToEdit = function(beer) {
       this.beer = beer;
     }
 
-    beerEditionService.prepareToCreate = function () {
+    beerEditionService.prepareToCreate = function() {
       delete this.beer;
     }
 
