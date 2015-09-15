@@ -17,7 +17,7 @@
 
 /* Content
 -------------------------------------------------- */
-#logo {
+#content #logo {
   max-width: 60%;
   margin: 4em 0 8em 0;
 }
@@ -36,16 +36,17 @@
 -------------------------------------------------- */
 html {
   position: relative;
-  height: 100%;
 }
 
 body {
   /* Margin bottom by footer height */
+  height: 100vh;
   margin-bottom: 60px;
 }
+
 .footer {
-  position: absolute;
-  overflow: hidden;
+  position: fixed;
+  overflow: visible;
   margin: 0;
   padding: 0;
   bottom: 0;

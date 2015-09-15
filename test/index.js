@@ -42,7 +42,7 @@ describe('# Backend', function() {
 
     before(function(done) {
       fs.readFile('test/beer-images.json',{ encoding : 'utf8' }, function(err,data) {
-        if(err) should.fail(0,1,'Error reading example beers file' + err);
+        if(err) should.fail(0,1,'Error reading example beer images file' + err);
         beerImages = JSON.parse(data);
         done();
       });
@@ -73,7 +73,7 @@ describe('# Backend', function() {
           beers[index].img = JSON.parse(data);
           if (--n === 0) done(); // Exit the test when all images have been inserted
         })
-        .form().append('file', beerImage, { filename: 'test', contentType: 'image/*' });
+        .form().append('file', new Buffer(beerImage, 'base64'), { filename: 'test', contentType: 'image/*' });
       });
     });
 

@@ -1,13 +1,18 @@
 .row
   h1.text-center(style = 'white-space: pre;')
     | Votre bière est {{ beer.name | uppercase }}
-    | de la brasserie Anadir campo
+    | de la brasserie {{ beer.brewery }}
 .row
   .figure.col-xs-5
     img.img-responsive(ng-src='data:image/jpeg;base64,{{ image }}')
 
   .description.col-xs-7
+    h2 Descriptif
     div(ng-bind-html='beer.description | html')
+    h2 Type de bière
+    div(ng-bind-html='beer.kind | html')
+    h2 Pourcentage d'alcool
+    div(ng-bind='beer.alcohol')
     .label.label-warning(ng-show='{{ beer.new }}') NOUVEAU !
 
 

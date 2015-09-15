@@ -22,8 +22,6 @@ exports.beerList = function() {
 exports.setVisibility = function(id, visibility) {
   var deferred = q.defer();
 
-  console.log(id + ' ' + visibility);
-
   Beer.update({ _id : id }, { visible: visibility }, function(err, data) {
     if(err) {
       deferred.reject(err);
@@ -82,6 +80,7 @@ exports.getRandomBeer = function() {
 
       Beer.findOne({ visible: true }).skip(rand).exec(function(err, beer) {
         beer.description = marked(beer.description);
+        beer.kind = marked(beer.kind);
         deferred.resolve(beer);
       });
     }
@@ -97,6 +96,8 @@ exports.getBeer = function(beerId) {
     if(err) {
       deferred.reject(err);
     } else {
+      beer.description = marked(beer.description);
+      beer.kind = marked(beer.kind);
       deferred.resolve(beer);
     }
   });
@@ -111,7 +112,7 @@ exports.getBeerImage = function(id) {
     if(err) {
       deferred.reject(err);
     } else {
-      var data = new Buffer(beerImage.img.data).toString('base64')
+      var data = new Buffer(beerImage.img.data).toString('base64');
       deferred.resolve(data);
     }
   });

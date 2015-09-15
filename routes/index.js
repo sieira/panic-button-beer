@@ -30,7 +30,7 @@ exports.beerDetail = function(req, res) {
     if(req.method === "GET") {
       res.render('views/beer-detail', { title: 'Beer' });
     } else {
-      BeerController.getBeer(req.beerId)
+      BeerController.getBeer(req.params.beerId)
       .then(function (data) {
         res.status(200).json(data);
       },
