@@ -164,7 +164,7 @@ body {
   justify-content: space-between;
   align-items: stretch;
   /** BOX-MODEL **/
-  padding: 40px 50px 30px 50px;
+  margin: auto;
 }
 
 .beer-detail .beer-detail-header {
@@ -186,6 +186,10 @@ body {
 .beer-detail .beer-image {
   /** SIZE **/
   /** LAYOUT **/
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-end;
+  align-items: stretch;
   /** FONT **/
 }
 
