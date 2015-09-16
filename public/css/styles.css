@@ -43,7 +43,7 @@ body {
   min-height: 100vh;
 
   width: 100vw;
-  max-width: 1000px;
+
 
   overflow: hidden;
   /** LAYOUT **/
@@ -75,11 +75,13 @@ body {
 
 .main-content {
   /** SIZE **/
+  width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 .footer {
+    background-color: #EEEEEE;
 }
 
 /* Header
@@ -87,13 +89,15 @@ body {
 .page-header .container {
   /** SIZE **/
   width: 100%;
+  max-width: 1000px;
+
   /** LAYOUT **/
   display: flex;
   flex-flow: row wrap-reverse;
   justify-content: space-between;
   align-items: center;
   /** BOX-MODEL **/
-  margin: 0;
+  margin: auto;
   padding: 35px 20px 0 20px;
 }
 
@@ -139,7 +143,7 @@ body {
 /* Content
 -------------------------------------------------- */
 .main-content .container {
-    max-width: 100%;
+  max-width: 100%;
 }
 
 #content #logo {
@@ -160,7 +164,7 @@ body {
   justify-content: space-between;
   align-items: stretch;
   /** BOX-MODEL **/
-  padding: 40px 20px 30px 20px;
+  padding: 40px 0px 30px 0px;
 }
 
 .beer-detail .beer-detail-header {
@@ -174,9 +178,9 @@ body {
 .beer-detail .beer-detail-content {
   /** LAYOUT **/
   display: flex;
-  flex-flow: row wrap;
-  align-items: stretch;
+  flex-flow: row nowrap;
   justify-content: center;
+  align-items: stretch;
 }
 
 .beer-detail .beer-image {
@@ -189,14 +193,13 @@ body {
 .beer-detail .beer-image img {
   /** SIZE **/
   max-height: 52vh;
-  max-width: 100%;
   /** LAYOUT **/
 }
 
 
 .beer-detail .description {
   /** SIZE **/
-  min-width: 15em;
+  max-width: 38em;
   /** LAYOUT **/
   display: flex;
   flex-flow: column nowrap;
@@ -225,11 +228,31 @@ body {
  * It has to collapse, and adapt
  */
 @media screen and (max-width: 430px) {
+  body {
+      display: block;
+      overflow-y: auto;
+  }
+
+  .page-header .container .panic-button {
+    margin-bottom: 1em;
+    justify-content: center;
+  }
+
+  .page-header .container .logo {
+    margin-bottom: 1em;
+    justify-content: center;
+  }
+
+  .beer-detail .beer-detail-content {
+    flex-wrap: wrap;
+  }
+
   .beer-detail .beer-image {
     max-height: 80vh;
   }
 
   .beer-detail .description {
+    min-width: 15em;
     width: 100%;
   }
 }

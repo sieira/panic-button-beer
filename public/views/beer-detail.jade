@@ -3,11 +3,11 @@
     | Votre bière est {{ beer.name | uppercase }}
     | de la Brasserie {{ beer.brewery }}
 
-  .row.beer-detail-content
-    .col-xs-5.col.beer-image
+  .beer-detail-content
+    .beer-image
       img(ng-src='data:image/jpeg;base64,{{ image }}')
 
-    .description.col-xs-7
+    .description
       h3 Descriptif
       div(ng-bind-html='beer.description | html')
       h3 Type de bière
