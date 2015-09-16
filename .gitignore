@@ -5,6 +5,9 @@ logs
 # Environment variables
 .env
 
+# Licensed fonts
+public/css/fonts/
+
 # Runtime data
 pids
 *.pid

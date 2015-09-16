@@ -1,21 +1,21 @@
-.row
-  h1.text-center(style = 'white-space: pre;')
+.beer-detail
+  h2.beer-detail-header(style = 'white-space: pre-wrap;')
     | Votre bière est {{ beer.name | uppercase }}
-    | de la brasserie {{ beer.brewery }}
-.row
-  .figure.col-xs-5
-    img.img-responsive(ng-src='data:image/jpeg;base64,{{ image }}')
+    | de la Brasserie {{ beer.brewery }}
 
-  .description.col-xs-7
-    h2 Descriptif
-    div(ng-bind-html='beer.description | html')
-    h2 Type de bière
-    div(ng-bind-html='beer.kind | html')
-    h2 Pourcentage d'alcool
-    div(ng-bind='beer.alcohol')
-    .label.label-warning(ng-show='{{ beer.new }}') NOUVEAU !
+  .row.beer-detail-content
+    .col-xs-5.col.beer-image
+      img(ng-src='data:image/jpeg;base64,{{ image }}')
+
+    .description.col-xs-7
+      h3 Descriptif
+      div(ng-bind-html='beer.description | html')
+      h3 Type de bière
+      div(ng-bind-html='beer.kind | html')
+      h3 Pourcentage d'alcool
+      div(ng-bind='beer.alcohol + "%"')
 
 
-timer(countdown ='30', interval = '1000')
-  .progress
-    .progress-bar.progress-bar-info(role = 'progressbar' , aria-valuenow = '{{progressBar}}', aria-valuemin = '0', aria-valuemax = '100', style = 'width: {{progressBar}}%;')
+// timer(countdown ='30', interval = '1000')
+    .progress
+//    .progress-bar.progress-bar-info(role = 'progressbar' , aria-valuenow = '{{progressBar}}', aria-valuemin = '0', aria-valuemax = '100', style = 'width: {{progressBar}}%;')

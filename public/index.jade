@@ -8,12 +8,21 @@ html(ng-app = 'eltast')
     link(rel='stylesheet', href='css/styles.css')
 
   body
-    .page-header(ng-show = '$root.showHeader')
-      img#logo.img-responsive(src = 'img/logo.png' alt = 'eltast')
-    #content.main-content.container(ng-view)
+    .page-header
+      .container(ng-show = '$root.showHeader')
+        .panic-button
+          img(src = 'img/panic-button.png' alt = 'panic button')
+          p
+            | Appuyez ici pour une
+            | &nbsp&nbspnouvelle selection
+        .logo
+          img(src = 'img/logo.png' alt = 'eltast')
+        
+    #content.main-content
+      .container(ng-view)
     footer.footer
       .container
-        h3.text-muted.text-center Fièrement dessiné par El Tast et Spacebar.fr
+        .text-muted.text-center Fièrement dessiné par El Tast et Spacebar.fr
 
   script(src='jquery/dist/jquery.min.js')
   script(src='bootstrap/dist/js/bootstrap.min.js')

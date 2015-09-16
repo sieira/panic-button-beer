@@ -43,5 +43,14 @@
     "kind": "Pale lager con cancamusa",
     "alcohol": 4.8,
     "price": 0.25
+  },
+  {
+    "name": "La Chapelle",
+    "brewery": "de la Goutte d'or",
+    "img": null,
+    "description": "La rue Louis Blanc s'ouvre devant vous. Le parfum des épices qui vous enture vous ramène dans ce wagon où les paysages défilent au ralenti : rizières, canaux, palmeraies... Séquence rythmée par le Chai que vous savourez doucement. Était-ce à Cochin ou métro La Chapelle ?",
+    "kind": "Bière blanche au thé chai indien",
+    "alcohol": 4.5,
+    "price": 0.25
   }
 ]

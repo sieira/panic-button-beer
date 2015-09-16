@@ -2,7 +2,7 @@
   .col-xs-6
     .btn-group
       .btn #[i.visible.fa.fa-2x(ng-click='switchVisibility()' ng-class='{ "fa-eye text-success": beer.visible, "fa-eye-slash": !beer.visible }')]
-      span.h1.noselect {{ beer.name }}
+      span.h4(style = 'display: inline-block; vertical-align: middle;') {{ beer.name }}
   .col-xs-6.text-right
     .btn-group
       .btn #[.fa.fa-pencil.fa-2x(ng-click='editBeer()')]
