@@ -3,11 +3,12 @@
 var q = require('q'),
     marked = require('marked'),
     moment = require('moment'),
+    config = require('../config'),
     Beer = require('../models/beer'),
     BeerImage = require('../models/beer-image');
 
 //TODO put in config file
-var gracePeriod = { n: 10, unit: 'minutes'};
+var gracePeriod = config.gracePeriod;
 
 exports.beerList = function() {
   var deferred = q.defer();

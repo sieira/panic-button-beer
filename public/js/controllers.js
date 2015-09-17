@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-  var app = angular.module('eltast-controllers', ['eltast-services', 'ui.bootstrap', 'angularFileUpload', 'timer'])
+  var app = angular.module('eltast-controllers', ['eltast-services', 'ui.bootstrap', 'angularFileUpload', 'ngProgress'])
 
   .filter('html', ['$sce', function($sce) {
       return function(text) {
@@ -70,7 +70,11 @@
     };
   }])
 
-  .controller('productDetailController', ['$log', '$rootScope', '$scope', '$http', '$window', function($log, $rootScope, $scope, $http, $window) {
+  .controller('productDetailController', ['$log', '$rootScope', '$scope', '$http', '$window', 'ngProgressFactory', function($log, $rootScope, $scope, $http, $window, ngProgressFactory) {
+    var timeToGo = 10000,
+        tick = 10,
+        elapsed = 0;
+
     $rootScope.showHeader = true;
 
     $http.post('beer-detail', {})
@@ -80,20 +84,28 @@
       $http.get('beer-image/'+ beer.img, {})
       .then(function(response) {
         $scope.image = response.data;
+
+        $scope.progressbar = ngProgressFactory.createInstance();
+        $scope.progressbar.setColor('#1E90FF');
+        $scope.progressbar.setHeight('4px');
+        $scope.progressbar.setParent(document.getElementById('progress'))
+
+        var timeout = setInterval(function() {
+          if ($scope.progressbar.status() >= 100) {
+            clearTimeout(timeout);
+            $window.location.href = '#/';
+          }
+          else {
+            elapsed += tick;
+            $scope.progressbar.set((elapsed / timeToGo) * 100);
+          }
+        }, tick);
       }, function(err) {
         $log.error('Error getting beer image', err);
       });
     },
     function(err) {
       $log.error('Error getting random beer', err);
-    });
-
-    $scope.timerRunning = true;
-    $scope.$broadcast('timer-start');
-
-    $scope.$on('timer-stopped', function(event, data){
-      //TODO wait until the end of the bar animation
-      $window.location.href = '#/';
     });
   }])
 
