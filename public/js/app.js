@@ -2,11 +2,9 @@
 
 (function() {
 	var app = angular.module('eltast', ['eltast-controllers', 'eltast-directives', 'eltast-services', 'ngRoute'])
-
   .config(['$routeProvider',
 		function($routeProvider) {
 			$routeProvider
-
 			/*
 			 *  Routes
 			 */
@@ -16,17 +14,8 @@
 			})
 			.when('/beer-detail', {
 				templateUrl : '/beer-detail',
-				controller  : 'productDetailController'
-				/*,
-				resolve: {
-					//TODO preload the detail
-					// http://stackoverflow.com/questions/11972026/delaying-angularjs-route-change-until-model-loaded-to-prevent-flicker
-					delay: function($q, $timeout) {
-						var delay = $q.defer();
-						$timeout(delay.resolve, 1000);
-						return delay.promise;
-					}
-				}*/
+				controller  : 'productDetailController',
+				resolve: { beer: 'preloadBeerService' }
 			})
 			.when('/admin', {
 				templateUrl : '/admin',

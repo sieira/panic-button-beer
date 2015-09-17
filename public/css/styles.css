@@ -242,12 +242,7 @@ body {
     left: 0;
 }
 
-#progress .ngProgress-container {
-    width: 100%;
-    max-width: 100%;
-}
-
-/*********************************************************/
+/************* RESPONSIVENESS *****************************/
 /**
  * At this point; the text is not readable anymore,
  * It has to collapse, and adapt

@@ -70,42 +70,37 @@
     };
   }])
 
-  .controller('productDetailController', ['$log', '$rootScope', '$scope', '$http', '$window', 'ngProgressFactory', function($log, $rootScope, $scope, $http, $window, ngProgressFactory) {
+  .controller('productDetailController', ['$log', '$rootScope', '$scope', '$http', '$window', 'ngProgressFactory', 'beer', function($log, $rootScope, $scope, $http, $window, ngProgressFactory, beer) {
+    $rootScope.showHeader = true;
+
     var timeToGo = 10000,
         tick = 10,
         elapsed = 0;
 
-    $rootScope.showHeader = true;
+    $scope.beer = beer.beerDetail;
+    $scope.image = beer.beerImage;
 
-    $http.post('beer-detail', {})
-    .then(function(response) {
-      var beer = $scope.beer = response.data;
+    $scope.progressbar = ngProgressFactory.createInstance();
+    $scope.progressbar.setColor('#1E90FF');
+    $scope.progressbar.setHeight('4px');
+    $scope.progressbar.setParent(document.getElementById('progress'))
 
-      $http.get('beer-image/'+ beer.img, {})
-      .then(function(response) {
-        $scope.image = response.data;
+    var timeout = setInterval(function() {
+      if ($scope.progressbar.status() >= 100) {
+        clearTimeout(timeout);
+        $window.location.href = '#/';
+      }
+      else {
+        elapsed += tick;
+        $scope.progressbar.set((elapsed / timeToGo) * 100);
+      }
+    }, tick);
 
-        $scope.progressbar = ngProgressFactory.createInstance();
-        $scope.progressbar.setColor('#1E90FF');
-        $scope.progressbar.setHeight('4px');
-        $scope.progressbar.setParent(document.getElementById('progress'))
-
-        var timeout = setInterval(function() {
-          if ($scope.progressbar.status() >= 100) {
-            clearTimeout(timeout);
-            $window.location.href = '#/';
-          }
-          else {
-            elapsed += tick;
-            $scope.progressbar.set((elapsed / timeToGo) * 100);
-          }
-        }, tick);
-      }, function(err) {
-        $log.error('Error getting beer image', err);
-      });
-    },
-    function(err) {
-      $log.error('Error getting random beer', err);
+    /**
+     * Clear the timer if the user exits the view
+     */
+    $rootScope.$on('$locationChangeSuccess', function() {
+        clearTimeout(timeout);
     });
   }])
 

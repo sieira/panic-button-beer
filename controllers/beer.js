@@ -116,14 +116,27 @@ exports.getBeer = function(beerId) {
 exports.getBeerImage = function(id) {
   var deferred = q.defer();
 
-  BeerImage.findOne({ _id : id }, function(err, beerImage) {
-    if(err) {
-      deferred.reject(err);
-    } else {
-      var data = new Buffer(beerImage.img.data).toString('base64');
-      deferred.resolve(data);
-    }
-  });
+  function _getBeerImage() {
+    BeerImage.findOne({ _id : id }, function(err, beerImage) {
+      if(err) {
+        deferred.reject(err);
+      } else {
+        var data = new Buffer(beerImage.img.data).toString('base64');
+        deferred.resolve(data);
+      }
+    });
+  }
+
+  /**
+   * Simulates a delay in case the development mode is active
+   */
+  if(process.env.NODE_ENV === 'development') {
+    setTimeout(function(){
+      _getBeerImage();
+    },5000);
+  } else {
+    _getBeerImage();
+  }
 
   return deferred.promise;
 };

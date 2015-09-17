@@ -9,6 +9,7 @@ var mongoose = require('mongoose'),
 
 // TODO hacer fullscreen http://www.html5rocks.com/en/mobile/fullscreen/?redirect_from_locale=fr
 // TODO evitar que pete si no hay birras
+// TODO test random beer
 mongoose.connect('mongodb://'+ process.env.DB_HOST + '/' + process.env.DB);
 
 server.start();
