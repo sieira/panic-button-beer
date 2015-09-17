@@ -15,7 +15,7 @@
 			.when('/beer-detail', {
 				templateUrl : '/beer-detail',
 				controller  : 'productDetailController',
-				resolve: { beer: 'preloadBeerService' }
+				resolve: { beer: factory }
 			})
 			.when('/admin', {
 				templateUrl : '/admin',
@@ -32,4 +32,29 @@
 				templateUrl : '/404'
 			});
    }]);
+
+	 function factory($http, $q, $log) {
+			var deferred = $q.defer();
+			var beer = {};
+
+			$http.post('beer-detail', {})
+			.then(function(response) {
+				beer.beerDetail = response.data;
+
+				$http.get('beer-image/'+ beer.beerDetail.img, {})
+				.then(function(response) {
+					beer.beerImage = response.data;
+					deferred.resolve(beer);
+				}, function(err) {
+					$log.error('Error getting beer image', err);
+					deferred.reject({});
+				});
+			},
+			function(err) {
+				$log.error('Error getting random beer', err);
+				deferred.reject({});
+			});
+
+			return deferred.promise;
+		};
 })();

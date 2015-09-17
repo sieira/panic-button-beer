@@ -12,8 +12,15 @@
   /**
    * Home page controller
    */
-  .controller('mainController', ['$rootScope', function($rootScope) {
+  .controller('mainController', ['$scope', '$rootScope', '$window', function($scope, $rootScope, $window) {
     $rootScope.showHeader = false;
+
+
+    $scope.load = function() {
+      $scope.spinning = true;
+      $window.location.href = '#/beer-detail';
+    };
+
     /*
      * TODO Animate the button on click
      */

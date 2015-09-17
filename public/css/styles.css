@@ -105,6 +105,9 @@ body {
   justify-content: flex-start;
   align-items: center;
   /** BOX-MODEL **/
+  /** FONT **/
+  text-decoration: none;
+  color: inherit;
 }
 
 .page-header .panic-button img {

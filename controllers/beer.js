@@ -133,7 +133,7 @@ exports.getBeerImage = function(id) {
   if(process.env.NODE_ENV === 'development') {
     setTimeout(function(){
       _getBeerImage();
-    },5000);
+    },config.transmissionDelay);
   } else {
     _getBeerImage();
   }
