@@ -8,8 +8,8 @@ html(ng-app = 'eltast')
     link(rel='stylesheet', href='css/styles.css')
 
   body
-    .page-header
-      .container(ng-show = '$root.showHeader')
+    .page-header(ng-show = '$root.showHeader')
+      .container
         .panic-button
           img(src = 'img/panic-button.png' alt = 'panic button')
           p

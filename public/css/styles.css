@@ -41,10 +41,7 @@ body {
   height: 100vh;
   max-height: 100vh;
   min-height: 100vh;
-
   width: 100vw;
-
-
   overflow: hidden;
   /** LAYOUT **/
   display: flex;
@@ -56,7 +53,7 @@ body {
   /** FONT **/
   font-family: "Century Gothic", Verdana, sans-serif;
   font-size: 14px;
-  /** DISABLE USER SELECTION **/
+  /** SELECTION **/
   cursor: default;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -75,7 +72,6 @@ body {
 
 .main-content {
   /** SIZE **/
-  width: 100%;
   overflow-y: auto;
   overflow-x: hidden;
 }
@@ -90,7 +86,6 @@ body {
   /** SIZE **/
   width: 100%;
   max-width: 1000px;
-
   /** LAYOUT **/
   display: flex;
   flex-flow: row wrap-reverse;
@@ -113,6 +108,7 @@ body {
 }
 
 .page-header .panic-button img {
+  /** SIZE **/
   max-height: 50px;
 }
 
@@ -143,18 +139,23 @@ body {
 /* Content
 -------------------------------------------------- */
 .main-content .container {
-  max-width: 100%;
+  /** SIZE **/
 }
 
-#content #logo {
-  max-width: 60%;
-  margin: 4em 0 8em 0;
+#home .logo {
+  /** SIZE **/
+  max-height: 15vh;
+  max-width: 48vw;
+  /** BOX-MODEL **/
+  margin: 4em 0 17vh 0;
 }
 
-#content #panic-button {
-  border: 0;
-  outline: none;
-  max-width: 40%;
+#home .panic-button {
+  /** SIZE **/
+  max-width: 33vw;
+  max-height: 23vh;
+  /** BOX-MODEL **/
+  /** SELECTION **/
 }
 
 .beer-detail {
@@ -211,20 +212,24 @@ body {
   justify-content: center;
   /** FONT **/
   text-align: justify;
-  /** BOX MODEL **/
+  /** BOX-MODEL **/
   padding-left: 20px;
 }
 
 .beer-detail .description h3:first-child {
+  /** BOX-MODEL **/
   margin-top: 0;
 }
 
-/* Sticky footer
+/* footer
 -------------------------------------------------- */
 .footer .container {
+  /** SIZE **/
   width: 100%;
-  padding: 20px 0 10px 0;
+  /** FONT **/
   font-size: big;
+  /** BOX-MODEL **/
+  padding: 20px 0 10px 0;
 }
 
 
@@ -235,35 +240,52 @@ body {
  */
 @media screen and (max-width: 430px) {
   body {
-      display: block;
-      overflow-y: auto;
+    /** SIZE **/
+    min-height: 100vh;
+    max-height: none;
+    height: auto;
+    overflow-y: auto;
   }
 
   .page-header .container .panic-button {
-    margin-bottom: 1em;
+    /** LAYOUT **/
     justify-content: center;
+    /** BOX-MODEL **/
+    margin-bottom: 1em;
   }
 
   .page-header .container .logo {
-    margin-bottom: 1em;
+    /** BOX-MODEL **/
     justify-content: center;
+    margin-bottom: 1em;
+    /** LAYOUT **/
+  }
+
+  #home .h4 {
+    /** FONT **/
+    font-size: small;
   }
 
   .beer-detail {
+    /** BOX-MODEL **/
     padding: 0;
   }
 
   .beer-detail .beer-detail-content {
+    /** LAYOUT **/
     flex-wrap: wrap;
   }
 
   .beer-detail .beer-image {
+    /** SIZE **/
     max-height: 80vh;
   }
 
   .beer-detail .description {
+    /** SIZE **/
     min-width: 15em;
     width: 100%;
+    /** BOX-MODEL **/
     padding: 0;
   }
 }
