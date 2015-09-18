@@ -1,0 +1,9 @@
+{
+  "name": "el tast",
+  "description": "el tast panic button",
+  "launch_path": "/",
+  "icons": {
+    "128": "/public/img/panic-button-128.png"
+  },
+  "fullscreen": true
+}
