@@ -12,7 +12,7 @@
   /**
    * Home page controller
    */
-  .controller('mainController', ['$scope', '$rootScope', '$window', function($scope, $rootScope, $window) {
+  .controller('homeController', ['$scope', '$rootScope', '$window', function($scope, $rootScope, $window) {
     $rootScope.showHeader = false;
 
     $scope.load = function() {

@@ -10,7 +10,7 @@
 			 */
 			.when('/', {
 				templateUrl : '/panic-button',
-				controller  : 'mainController'
+				controller  : 'homeController'
 			})
 			.when('/beer-detail', {
 				templateUrl : '/beer-detail',
