@@ -57,6 +57,25 @@ describe('# Backend', function() {
       done();
     });
 
+    it('Getting a beer when there is none should return 404 and not fail', function (done) {
+      var options = {
+        uri: 'http://' + hostname + ':' + port  + '/beer-detail',
+        encoding: 'utf8'
+      };
+
+      request.post(options)
+      .on('response', function(res) {
+        res.statusCode.should.equal(404);
+      })
+      .on('error', function(e) {
+        should.fail(0,1,'Problem getting unexistant beer: ' + e.message);
+      })
+      .on('data', function(data) {
+        should.equal(JSON.parse(data), null);
+        done();
+      })
+    });
+
     it('Inserting test images should not fail', function(done) {
       var options = {
         uri: 'http://' + hostname + ':' + port  + '/register-beer-image',
@@ -111,6 +130,25 @@ describe('# Backend', function() {
       });
     });
 
+    it('Getting a beer none is visible should return 404 and not fail', function (done) {
+      var options = {
+        uri: 'http://' + hostname + ':' + port  + '/beer-detail',
+        encoding: 'utf8'
+      };
+
+      request.post(options)
+      .on('response', function(res) {
+        res.statusCode.should.equal(404);
+      })
+      .on('error', function(e) {
+        should.fail(0,1,'Problem getting unexistant beer: ' + e.message);
+      })
+      .on('data', function(data) {
+        should.equal(JSON.parse(data), null);
+        done();
+      })
+    });
+
     it('Should change beer visibility', function(done) {
       var options = {
         uri: 'http://' + hostname + ':' + port  + '/set-visibility/' + beerId,
@@ -148,6 +186,44 @@ describe('# Backend', function() {
         JSON.parse(data).visible.should.equal(true);
         done();
       });
+    });
+
+    it('Getting a beer when at least one is visible should return the beer and not fail', function (done) {
+      var options = {
+        uri: 'http://' + hostname + ':' + port  + '/beer-detail',
+        encoding: 'utf8'
+      };
+
+      request.post(options)
+      .on('response', function(res) {
+        res.statusCode.should.equal(200);
+      })
+      .on('error', function(e) {
+        should.fail(0,1,'Problem getting unexistant beer: ' + e.message);
+      })
+      .on('data', function(data) {
+        should.not.equal(JSON.parse(data), null);
+        done();
+      })
+    });
+
+    it('Getting a nonexistant beer return 404 and not fail', function (done) {
+      var options = {
+        uri: 'http://' + hostname + ':' + port  + '/beer-detail/' + mongoose.Types.ObjectId(),
+        encoding: 'utf8'
+      };
+
+      request.post(options)
+      .on('response', function(res) {
+        res.statusCode.should.equal(404);
+      })
+      .on('error', function(e) {
+        should.fail(0,1,'Problem getting unexistant beer: ' + e.message);
+      })
+      .on('data', function(data) {
+        should.equal(JSON.parse(data), null);
+        done();
+      })
     });
 
     it('Should mark a beer for deletion', function(done) {

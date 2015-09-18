@@ -7,9 +7,6 @@ var mongoose = require('mongoose'),
     server = new Server({ port: process.env.PORT }),
     path = require('path');
 
-// TODO hacer fullscreen http://www.html5rocks.com/en/mobile/fullscreen/?redirect_from_locale=fr
-// TODO evitar que pete si no hay birras
-// TODO test random beer
 mongoose.connect('mongodb://'+ process.env.DB_HOST + '/' + process.env.DB);
 
 server.start();

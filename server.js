@@ -44,7 +44,9 @@ function Server(options) {
 
   app.get('/panic-button', routes.panicButton);
 
-  app.get('/beer-detail', routes.beerDetail);
+  app.get('/beer-detail', function(req, res) {
+    res.render('views/beer-detail', { title: 'Beer' })
+  });
   app.post('/beer-detail', routes.randomBeer);
   app.post('/beer-detail/:beerId', routes.beerDetail);
 

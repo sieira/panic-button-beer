@@ -15,15 +15,10 @@
   .controller('mainController', ['$scope', '$rootScope', '$window', function($scope, $rootScope, $window) {
     $rootScope.showHeader = false;
 
-
     $scope.load = function() {
       $scope.spinning = true;
       $window.location.href = '#/beer-detail';
     };
-
-    /*
-     * TODO Animate the button on click
-     */
   }])
 
   .controller('backofficeController', ['$log', '$rootScope', '$scope', '$http', '$location', 'beerEditionService', function($log, $rootScope, $scope, $http, $location, beerEditionService) {

@@ -7,7 +7,6 @@ var q = require('q'),
     Beer = require('../models/beer'),
     BeerImage = require('../models/beer-image');
 
-//TODO put in config file
 var gracePeriod = config.gracePeriod;
 
 exports.beerList = function() {
@@ -87,8 +86,12 @@ exports.getRandomBeer = function() {
       var rand = Math.floor(Math.random() * count);
 
       Beer.findOne({ visible: true }).skip(rand).exec(function(err, beer) {
-        beer.description = marked(beer.description);
-        beer.kind = marked(beer.kind);
+        if(err) {
+          deferred.reject(err);
+        } else if(beer) {
+          beer.description = marked(beer.description);
+          beer.kind = marked(beer.kind);
+        }
         deferred.resolve(beer);
       });
     }
@@ -103,11 +106,11 @@ exports.getBeer = function(beerId) {
   Beer.findOne({ _id: beerId }, function(err, beer) {
     if(err) {
       deferred.reject(err);
-    } else {
+    } else if (beer) {
       beer.description = marked(beer.description);
       beer.kind = marked(beer.kind);
-      deferred.resolve(beer);
     }
+    deferred.resolve(beer);
   });
 
   return deferred.promise;

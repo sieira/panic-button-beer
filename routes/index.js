@@ -27,27 +27,32 @@ exports.panicButton = function(req, res) {
  * GET beer-detail view
  */
 exports.beerDetail = function(req, res) {
-    if(req.method === "GET") {
-      res.render('views/beer-detail', { title: 'Beer' });
+  BeerController.getBeer(req.params.beerId)
+  .then(function(data) {
+    if(!data) {
+      res.status(404).json(data);
     } else {
-      BeerController.getBeer(req.params.beerId)
-      .then(function(data) {
-        res.status(200).json(data);
-      },
-      function(err) {
-        // TODO handle this error
-        res.status(418).json({ message: err });
-      });
+      res.status(200).json(data);
     }
+  },
+  function(err) {
+    if(err.name === 'CastError') {
+      res.status(400).json({ message: err }); // Bad request
+    }
+    res.status(418).json({ message: err });
+  });
 };
 
 exports.randomBeer = function(req, res) {
   BeerController.getRandomBeer()
   .then(function(data) {
-    res.status(200).json(data);
+    if(!data) {
+      res.status(404).json(data);
+    } else {
+      res.status(200).json(data);
+    }
   },
   function(err) {
-    // TODO handle this error
     res.status(418).json({ message: err });
   });
 };
