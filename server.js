@@ -10,7 +10,8 @@ var express = require('express'),
     routes = require('./routes'),
     bodyParser = require('body-parser'),
     backoffice = require('./routes/backoffice'),
-    multer = require('multer');
+    multer = require('multer'),
+    favicon = require('serve-favicon');
 
 function Server(options) {
   var server;
@@ -24,11 +25,13 @@ function Server(options) {
 
   app.set('port', options.port || process.env.PORT || 8080);
 
+  app.use(favicon(path.join(__dirname,'public/img/panic-button-128.png')));
+
   app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
   app.use(bodyParser.json()); // parse application/json
 
   app.set('view engine', 'jade');
-  app.set('views', path.join(__dirname,'/public'));
+  app.set('views', path.join(__dirname,'public'));
 
   app.use(express.static(path.join(__dirname, 'public')));
   app.use(express.static(path.join(__dirname, 'bower_components')));

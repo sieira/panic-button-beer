@@ -1,5 +1,6 @@
 'use strict'
 
+//TODO test frontend http://www.yearofmoo.com/2013/01/full-spectrum-testing-with-angularjs-and-karma.html
 require('dotenv').load();
 
 var hostname = process.env.TEST_HOST,

@@ -1,0 +1,13 @@
+{
+  "name": "El tast panic button",
+  "icons": [
+    {
+      "src": "img/panic-button-128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "density": 3.0
+    }
+  ],
+  "start_url": "/",
+  "display": "fullscreen"
+}
