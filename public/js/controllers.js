@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-  var app = angular.module('eltast-controllers', ['eltast-services', 'ui.bootstrap', 'angularFileUpload', 'ngProgress'])
+  var app = angular.module('eltast')
 
   .filter('html', ['$sce', function($sce) {
       return function(text) {

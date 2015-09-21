@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-	var app = angular.module('eltast', ['eltast-controllers', 'eltast-directives', 'eltast-services', 'ngRoute'])
+	var app = angular.module('eltast', ['ngRoute', 'ui.bootstrap', 'angularFileUpload', 'ngProgress'])
   .config(['$routeProvider',
 		function($routeProvider) {
 			$routeProvider
@@ -15,6 +15,12 @@
 			.when('/beer-detail', {
 				templateUrl : '/beer-detail',
 				controller  : 'productDetailController',
+				/**
+					TODO
+						This line should be :
+							resolve: { beer: beerRetrievalService.getRandomBeer }
+							you need to export the service as an object
+				*/
 				resolve: { beer: factory }
 			})
 			.when('/admin', {

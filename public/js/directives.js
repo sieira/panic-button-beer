@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-  var app = angular.module('eltast-directives', [])
+  var app = angular.module('eltast')
 
   /**
   * The ng-thumb directive
