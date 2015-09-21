@@ -43,6 +43,13 @@ exports.beerDetail = function(req, res) {
   });
 };
 
+exports.beerNameExists = function(req,res) {
+  BeerController.beerNameExists(req.params.beerName)
+  .then(function(data) {
+      res.status(200).json(data);
+  });
+}
+
 exports.randomBeer = function(req, res) {
   BeerController.getRandomBeer()
   .then(function(data) {
@@ -63,7 +70,6 @@ exports.beerImage = function(req, res) {
     res.status(200).json(data);
   },
   function(err) {
-    // TODO handle this error
     res.status(418).json({ message: err });
   });
 };

@@ -15,7 +15,6 @@ exports.beerList = function(req, res) {
     res.status(201).json(data);
   })
   .fail(function(err) {
-    // TODO handle this error
     res.status(418).json({ message: err });
   });
 };
@@ -30,7 +29,6 @@ exports.setVisibility = function(req, res) {
     res.status(201).json(data);
   })
   .fail(function(err) {
-    // TODO handle this error
     res.status(418).json({ message: err });
   });
 };
@@ -47,7 +45,6 @@ exports.editBeer = function(req, res) {
       res.status(201).json(data);
     })
     .fail(function(err) {
-      // TODO handle this error
       res.status(418).json({ message: err });
     });
   }
@@ -59,7 +56,6 @@ exports.deleteBeer = function(req, res) {
       res.status(200).json(data);
     })
     .fail(function(err) {
-      // TODO handle this error
       res.status(418).json({ message: err });
     });
 };
@@ -70,7 +66,6 @@ exports.undeleteBeer = function(req, res) {
       res.status(200).json(data);
     })
     .fail(function(err) {
-      // TODO handle this error
       res.status(418).json({ message: err });
     });
 };
@@ -81,7 +76,6 @@ exports.registerBeerImage = function(req,res) {
     res.status(201).json(data);
   })
   .fail(function(err) {
-    // TODO handle this error
     res.status(418).json({ message: err });
   });
 }

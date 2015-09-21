@@ -3,6 +3,7 @@
   form.panel-body(name='form', novalidate)
   
     alert.alert-danger(ng-show='form.$submitted && form.name.$error.required') #[.fa.fa-exclamation-triangle] Le champ nom est obligatoire
+    alert.alert-danger(ng-show='form.$submitted && form.name.$error.beerNameAvailable') #[.fa.fa-exclamation-triangle] Il existe dejà une bière nommée {{form.name.$viewValue}}
     alert.alert-danger(ng-show='form.$submitted && form.brewery.$error.required') #[.fa.fa-exclamation-triangle] Le champ brasserie est obligatoire
     alert.alert-danger(ng-show='form.$submitted && form.file.$error.required') #[.fa.fa-exclamation-triangle] Veuillez selectionner une image
     alert.alert-danger(ng-show='form.$submitted && form.file.$error.valid_file') #[.fa.fa-exclamation-triangle] Le fichier doit être une image
@@ -15,7 +16,7 @@
     
     .form-group(ng-class='{"has-error": (form.name.$dirty && form.name.$invalid)}')
       label(for='name') Nom
-      input.form-control(name='name', ng-model='beer.name', type='text', required)
+      input.form-control(name='name', ng-model='beer.name', type='text', required, beer-name-available)
     .form-group(ng-class='{"has-error": (form.brewery.$dirty && form.brewery.$invalid)}')
       label(for='brewery') Brasserie
       input.form-control(name='brewery', ng-model='beer.brewery', type='text', required)

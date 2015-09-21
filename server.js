@@ -50,8 +50,10 @@ function Server(options) {
   app.get('/beer-detail', function(req, res) {
     res.render('views/beer-detail', { title: 'Beer' })
   });
+  
   app.post('/beer-detail', routes.randomBeer);
   app.post('/beer-detail/:beerId', routes.beerDetail);
+  app.post('/beer-name-exists/:beerName', routes.beerNameExists);
 
   app.get('/beer-list', backoffice.beerList);
   app.get('/beer-preview', backoffice.beerPreview);

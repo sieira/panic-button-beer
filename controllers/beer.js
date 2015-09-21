@@ -76,10 +76,24 @@ exports.editBeer = function(item) {
   return deferred.promise;
 };
 
+exports.beerNameExists = function(beerName) {
+  var deferred = q.defer();
+
+  Beer.count({ name : beerName }, function(err, count) {
+    if(err) {
+      deferred.reject(err);
+    } else {
+      deferred.resolve(count > 0);
+    }
+  });
+
+  return deferred.promise;
+};
+
 exports.getRandomBeer = function() {
   var deferred = q.defer();
 
-  Beer.count({ visible: true }, function(err,count) {
+  Beer.count({ visible: true }, function(err, count) {
     if(err) {
       deferred.reject(err);
     } else {

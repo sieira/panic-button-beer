@@ -53,8 +53,27 @@
     };
   }])
 
-  .directive('validBeerName',function(){
-    //TODO comprobar que la birra no exista ya, y no validar si el nombre existe
+  .directive('beerNameAvailable', function($q, $http) {
+    return {
+      restrict: 'A',
+      require: 'ngModel',
+      link : function(scope, elem, attrs, ctrl) {
+        ctrl.$asyncValidators.beerNameAvailable = function (modelValue, viewValue) {
+          var deferred = $q.defer();
+
+          $http.post('beer-name-exists/' + modelValue, {})
+          .then(function(response) {
+            if(response.data) deferred.reject();
+            else deferred.resolve();
+          }, function(err) {
+            $log.error('Error checking beer availability', err);
+            deferred.reject();
+          });
+
+          return deferred.promise;
+        }
+      }
+    }
   })
 
   .directive('validFile',function(){
