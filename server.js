@@ -23,7 +23,7 @@ function Server(options) {
 
   var upload = multer({ storage: multer.memoryStorage() });
 
-  app.set('port', options.port || process.env.PORT || 8080);
+  app.set('port', options.port || process.env.PORT || 8010);
 
   app.use(favicon(path.join(__dirname,'public/img/panic-button-128.png')));
 
@@ -50,7 +50,7 @@ function Server(options) {
   app.get('/beer-detail', function(req, res) {
     res.render('views/beer-detail', { title: 'Beer' })
   });
-  
+
   app.post('/beer-detail', routes.randomBeer);
   app.post('/beer-detail/:beerId', routes.beerDetail);
   app.post('/beer-name-exists/:beerName', routes.beerNameExists);
