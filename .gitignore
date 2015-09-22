@@ -2,9 +2,6 @@
 logs
 *.log
 
-# Environment variables
-.env
-
 # Licensed fonts
 public/css/fonts/
 
