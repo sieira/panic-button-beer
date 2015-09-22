@@ -24,7 +24,7 @@ function Server(options) {
   var upload = multer({ storage: multer.memoryStorage() });
 
   app.set('port', options.port || process.env.PORT || 8080);
-  app.set('ip', process.env.HOST || 'localhost');
+  app.set('ip', process.env.HOST || '127.0.0.1');
 
   app.use(favicon(path.join(__dirname,'public/img/panic-button-128.png')));
 
