@@ -11,4 +11,9 @@ var dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/';
 
 mongoose.connect(dbUrl + process.env.DB);
 
-server.start();
+var options = {
+  port:  process.env.PORT,
+  ip:  process.env.HOST
+};
+
+server.start(options);

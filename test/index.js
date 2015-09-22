@@ -3,14 +3,14 @@
 //TODO test frontend http://www.yearofmoo.com/2013/01/full-spectrum-testing-with-angularjs-and-karma.html
 require('dotenv').load();
 
-var hostname = process.env.TEST_HOST,
-    port = process.env.TEST_PORT;
+var hostname = process.env.TEST_HOST || 'localhost',
+    port = process.env.TEST_PORT || 8081;
 
 var should = require('chai').should(),
     fs = require('fs'),
     request = require('request'),
     Server = require('../server'),
-    server = new Server({ port: port }),
+    server = new Server({ port: port, ip: hostname }),
     mongoose = require('mongoose'),
     querystring = require('querystring'),
     mocha_mongoose = require('mocha-mongoose');
