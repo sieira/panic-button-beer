@@ -74,7 +74,7 @@ function Server(options) {
 
   // Start it up!
   this.start = function() {
-    server = app.listen(app.get('port'), function() {
+    server = app.listen(app.get('port'), app.get('ip'), function() {
       console.log('\x1b[33m' + 'Running in '+ process.env.NODE_ENV + ' mode\x1b[0m');
       console.log('\x1b[32m✔\x1b[0m [%s] Express server listening at %s:%d', Date(Date.now()), app.get('ip'),app.get('port'));
     });
