@@ -108,16 +108,23 @@
 
   .controller('editBeerController', ['$log', '$rootScope', '$scope', '$http', 'FileUploader', 'beerEditionService', function($log, $rootScope, $scope, $http, FileUploader, beerEditionService) {
     $rootScope.showHeader = true;
-    $scope.beer = beerEditionService.getBeer();
 
-    // TODO preload the registered image if beer is not {} or has an _id
     var uploader = $scope.uploader = new FileUploader({
       url: 'register-beer-image'
     });
 
+    $scope.beer = beerEditionService.getBeer();
+
+    beerEditionService.getBeerImage()
+    .then(function(response) {
+      $scope.beerImage =  uploader.queue[0] = response;
+    }, function() {
+      $scope.beerImage = {};
+    });
+
     uploader.filters.push({
         name: 'imageFilter',
-        fn: function(item /*{File|FileLikeObject}*/, options) {
+        fn: function(item, options) {
             var type = '|' + item.type.slice(item.type.lastIndexOf('/') + 1) + '|';
             return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
         }

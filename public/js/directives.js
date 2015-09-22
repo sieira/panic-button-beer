@@ -8,7 +8,7 @@
   * @author: nerv
   * @version: 0.1.2, 2014-01-09
   */
-  .directive('ngThumb', ['$window', function($window) {
+  .directive('ngThumb', ['$log', '$window', function($log, $window) {
     var helper = {
       support: !!($window.FileReader && $window.CanvasRenderingContext2D),
       isFile: function(item) {
@@ -24,14 +24,21 @@
       restrict: 'A',
       template: '<canvas/>',
       link: function(scope, element, attributes) {
+        var canvas = element.find('canvas');
+
         if (!helper.support) return;
 
         var params = scope.$eval(attributes.ngThumb);
 
+        if(params.imageData && Object.keys(params.imageData).length > 0) {
+          var img = new Image();
+          img.onload = onLoadImage;
+          img.src = 'data:image/jpeg;base64,'+params.imageData.data;
+        }
+
         if (!helper.isFile(params.file)) return;
         if (!helper.isImage(params.file)) return;
 
-        var canvas = element.find('canvas');
         var reader = new FileReader();
 
         reader.onload = onLoadFile;
@@ -53,7 +60,7 @@
     };
   }])
 
-  .directive('beerNameAvailable', function($q, $http) {
+  .directive('beerNameAvailable', function($q, $http, $log) {
     return {
       restrict: 'A',
       require: 'ngModel',
@@ -61,12 +68,29 @@
         ctrl.$asyncValidators.beerNameAvailable = function (modelValue, viewValue) {
           var deferred = $q.defer();
 
+          /**
+           * When editing an existing beer,
+           * the name of the beer can be the same
+           * than the name of the beer with the
+           * same id in the database
+           */
+          if(scope.beer._id) {
+            $http.post('beer-detail/' + scope.beer._id, {})
+            .then(function(response) {
+              if(response.data.name === modelValue) {
+                deferred.resolve();
+              }
+            });
+          }
+
           $http.post('beer-name-exists/' + modelValue, {})
           .then(function(response) {
-            if(response.data) deferred.reject();
+            if(response.data) {
+              deferred.reject();
+            }
             else deferred.resolve();
           }, function(err) {
-            $log.error('Error checking beer availability', err);
+            $log.error('Error checking beer name availability', err);
             deferred.reject();
           });
 

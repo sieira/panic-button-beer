@@ -3,7 +3,7 @@
 (function() {
   var app = angular.module('eltast')
 
-  .factory('beerEditionService', function() {
+  .factory('beerEditionService', ['$q', '$http', function($q, $http) {
     return {
       prepareToEdit: function(beer) {
         this.beer = beer;
@@ -15,11 +15,23 @@
         return this.beer || {};
       },
       getBeerImage: function() {
-        //TODO use the registered beer to get the image
-        return undefined;
+        var deferred = $q.defer();
+
+        if(!this.beer) {
+          deferred.reject({});
+        } else {
+          $http.get('beer-image/'+ this.beer.img, {})
+          .then(function(response) {
+            deferred.resolve(response);
+          }, function(err) {
+            $log.error('Error getting beer image', err);
+            deferred.reject({});
+          });
+        }
+        return deferred.promise;
       }
     };
-  })
+  }])
   .factory('beerRetrievalService', function ($http, $q, $log) {
     return {
       getRandomBeer: function() {
