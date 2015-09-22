@@ -23,7 +23,8 @@ function Server(options) {
 
   var upload = multer({ storage: multer.memoryStorage() });
 
-  app.set('port', options.port || process.env.PORT || 8010);
+  app.set('port', options.port || process.env.PORT || 8080);
+  app.set('ip', process.env.HOST || 'localhost');
 
   app.use(favicon(path.join(__dirname,'public/img/panic-button-128.png')));
 
@@ -75,7 +76,7 @@ function Server(options) {
   this.start = function() {
     server = app.listen(app.get('port'), function() {
       console.log('\x1b[33m' + 'Running in '+ process.env.NODE_ENV + ' mode\x1b[0m');
-      console.log('\x1b[32m✔\x1b[0m Express server listening on port ' + app.get('port'));
+      console.log('\x1b[32m✔\x1b[0m Express server listening at %s:%d',app.get('ip'),app.get('port'));
     });
   };
 
