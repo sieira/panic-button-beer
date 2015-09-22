@@ -9,8 +9,8 @@ var mongoose = require('mongoose'),
 
 var options = {
   db: { native_parser: true },
-  user: 'myUserName',
-  pass: 'myPassword'
+  user: process.env.DB_USER || undefined,
+  pass: process.env.DB_PASSWORD || undefined
 }
 
 mongoose.connect('mongodb://'+ process.env.DB_HOST + '/' + process.env.DB, options);
