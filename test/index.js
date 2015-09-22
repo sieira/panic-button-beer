@@ -15,7 +15,8 @@ var should = require('chai').should(),
     querystring = require('querystring'),
     mocha_mongoose = require('mocha-mongoose');
 
-var dbURI = 'mongodb://'+ process.env.DB_HOST + '/' + process.env.TEST_DB,
+
+var dbURI = (process.env.DB_URL || 'mongodb://localhost:27017/') + process.env.TEST_DB,
     clearDB  = mocha_mongoose(dbURI,{ noClear : true });
 
 mongoose.connect(dbURI);

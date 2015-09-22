@@ -7,12 +7,8 @@ var mongoose = require('mongoose'),
     server = new Server({ port: process.env.PORT }),
     path = require('path');
 
-var options = {
-  db: { native_parser: true },
-  user: process.env.DB_USER || undefined,
-  pass: process.env.DB_PASSWORD || undefined
-}
+var dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/';
 
-mongoose.connect('mongodb://'+ process.env.DB_HOST + '/' + process.env.DB, options);
+mongoose.connect(dbUrl + process.env.DB);
 
 server.start();
