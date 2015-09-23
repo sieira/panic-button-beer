@@ -15,6 +15,4 @@ var options = {
   port:  process.env.PORT || 8080
 };
 
-console.log('fuera');
-console.log(options);
 server.start(options);
