@@ -40,7 +40,7 @@ function Server(options) {
   if(process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
   } else {
-    app.use(morgan('common', { skip: function(req, res) { return res.statusCode < 400 }, stream: __dirname + '/../morgan.log' }));
+    app.use(morgan('common', { skip: function(req, res) { return res.statusCode < 400 }, stream: process.env.LOG_DIR + '/morgan.log' }));
   }
 
   app.get('/', routes.index);
