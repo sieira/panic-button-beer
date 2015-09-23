@@ -8,5 +8,5 @@
       .btn #[.fa.fa-pencil.fa-2x(ng-click='editBeer()')]
       .btn #[i.fa.fa-trash-o.fa-2x(ng-click='deleteBeer()')]
   
-  .row.alert.alert-danger.text-center(collapse = 'beer.expireAt === undefined', role = 'alert', style = 'margin: 0; padding: 0; width: 100%; height: 100%')
+  .row.alert.alert-danger.text-center(collapse = '(beer.expireAt === undefined || beer.expireAt === null)', role = 'alert', style = 'margin: 0; padding: 0; width: 100%; height: 100%')
     .h3(style = 'margin: 20px 0 20px 0;') {{ beer.name }} Sera eliminée le {{ beer.expireAt | date : "dd/MM/yyyy 'à' HH'h'mm" }} #[.btn #[i.fa.fa-undo.fa-2x(ng-click='undeleteBeer()')]]
