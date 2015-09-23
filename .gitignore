@@ -2,12 +2,6 @@
 logs
 *.log
 
-# Licensed fonts
-public/css/fonts/
-
-# Propietary images
-public/img
-
 # Runtime data
 pids
 *.pid
