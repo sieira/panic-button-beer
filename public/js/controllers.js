@@ -106,7 +106,7 @@
     });
   }])
 
-  .controller('editBeerController', ['$log', '$rootScope', '$scope', '$http', 'FileUploader', 'beerEditionService', function($log, $rootScope, $scope, $http, FileUploader, beerEditionService) {
+  .controller('editBeerController', ['$log', '$rootScope', '$scope', '$http', '$location', 'FileUploader', 'beerEditionService', 'ModalService', function($log, $rootScope, $scope, $http, $location, FileUploader, beerEditionService, ModalService) {
     $rootScope.showHeader = true;
 
     var uploader = $scope.uploader = new FileUploader({
@@ -150,8 +150,15 @@
 
         $http.post('edit-beer', beer)
           .then(function(response) {
-            //TODO redirect to admin index
-            $log.debug('status', response);
+            ModalService.showModal({
+              templateUrl: 'beerOKmodal',
+              controller: 'ModalController'
+            }).then(function(modal) {
+              modal.element.modal();
+              modal.close.then(function(result) {
+                $location.path('admin');
+              });
+            });
           },
           function(err) {
             $log.error('Error editing beer', err);
@@ -160,9 +167,15 @@
       };
 
       uploader.onErrorItem = function(item, response, status, headers) {
-        //TODO inform the user
-        $log.error('An error uploading the image :' + response.message);
+        alert('An error ocurred while uploading the image');
+        $log.error('An error ocurred uploading the image :' + response.message);
       };
     }
-  }]);
+  }])
+
+  .controller('ModalController', function($scope, close) {
+    $scope.close = function(result) {
+ 	    close(result, 500); // close, but give 500ms for bootstrap to animate
+    };
+  });
 })();

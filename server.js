@@ -63,6 +63,10 @@ function Server(options) {
   app.get('/edit-beer', backoffice.editBeer);
   app.post('/edit-beer', backoffice.editBeer);
 
+  app.get('/beerOKmodal', function(req,res) {
+    res.render('views/backoffice/beerOKmodal', { title: 'OK' })
+  });
+
   app.delete('/delete-beer/:beerId', backoffice.deleteBeer);
   app.post('/undelete-beer/:beerId', backoffice.undeleteBeer);
 

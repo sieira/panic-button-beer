@@ -1,7 +1,7 @@
 'use strict';
 
 (function() {
-	var app = angular.module('eltast', ['ngRoute', 'ui.bootstrap', 'angularFileUpload', 'ngProgress'])
+	var app = angular.module('eltast', ['ngRoute', 'ui.bootstrap', 'angularFileUpload', 'ngProgress', 'angularModalService'])
   .config(['$routeProvider',
 		function($routeProvider) {
 			$routeProvider
