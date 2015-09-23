@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "make test"
+    "test": "make test",
+    "build-js": "HOME=$HOME/app-root/runtime bower install && r.js -o build-config.js"
   },
   "author": "Luis Sieira <luis.sieira@spacebar.fr> (http://www.spacebar.fr/)",
   "license": "MIT",
