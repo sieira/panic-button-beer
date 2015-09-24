@@ -43,7 +43,7 @@ exports.editBeer = function(item) {
 	var beer = new Beer(item);
 
   var id = beer._id;
-  delete beer._id;
+  console.log(delete beer._id);
 
 /**
     // Delete the name from the update if it didn't change
