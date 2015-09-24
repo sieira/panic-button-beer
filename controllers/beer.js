@@ -40,27 +40,19 @@ exports.setVisibility = function(id, visibility) {
  */
 exports.editBeer = function(item) {
   var deferred = q.defer();
-	var beer = new Beer(item);
+	var beer = new Beer(item).toObject();
 
   var id = beer._id;
-  console.log(delete beer._id);
+  delete beer._id;
 
-/**
-    // Delete the name from the update if it didn't change
-    // to avoid breaking the unique index in mongo 2.4
-    Beer.findOne({ _id: id }, function(err, data) {
-      if(data && data.name === beer.name) {
-        delete beer.name;
-      }
-    });
-*/
-console.log(beer);
   // Register or update beer
   Beer.update({ _id: id }, beer, { upsert: true, multi: false }, function(err, data) {
     if(err) {
       deferred.reject(err);
     } else {
-      deferred.resolve(data.upserted[0]._id);
+      if(data.upserted)  {
+        deferred.resolve(data.upserted[0]._id);
+      } else deferred.resolve(data._id);
     }
 	});
   return deferred.promise;
