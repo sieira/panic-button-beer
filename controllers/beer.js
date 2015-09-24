@@ -42,12 +42,15 @@ exports.editBeer = function(item) {
   var deferred = q.defer();
 	var beer = new Beer(item);
 
+  var id = beer._id;
+  delete beer._id;
+
   // Register or update beer
-  beer.save(function(err, data) {
+  Beer.update({ _id: id }, beer, { upsert: true, multi: false }, function(err, data) {
     if(err) {
       deferred.reject(err);
     } else {
-      deferred.resolve(data._id);
+      deferred.resolve(data.upserted[0]._id);
     }
 	});
   return deferred.promise;

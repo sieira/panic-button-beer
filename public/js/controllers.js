@@ -113,11 +113,15 @@
       url: 'register-beer-image'
     });
 
-    $scope.beer = beerEditionService.getBeer();
+    var beer = $scope.beer = beerEditionService.getBeer();
 
     beerEditionService.getBeerImage()
     .then(function(response) {
-      $scope.beerImage =  uploader.queue[0] = response;
+      $scope.beerImage = uploader.queue[0] = response;
+      // Overrides the angular-file-upload destroy method so it doesn't fail
+      uploader.queue[0]._destroy = function() { };
+      // Override upload method so it doesn't do anything and doesn't fail
+      uploader.queue[0].upload = function() { uploader.onSuccessItem(null, $scope.beer.img); };
     }, function() {
       $scope.beerImage = {};
     });
@@ -140,20 +144,18 @@
         uploader.removeFromQueue(uploader.queue[0]);
     };
 
-    $scope.editBeer = function(beer) {
+    $scope.editBeer = function() {
       if($scope.form.$invalid) return;
-
-      uploader.queue[0].upload();
 
       uploader.onSuccessItem = function(item, response, status, headers) {
         beer.img = response;
-
         $http.post('edit-beer', beer)
           .then(function(response) {
             ModalService.showModal({
               templateUrl: 'beerOKmodal',
               controller: 'ModalController'
-            }).then(function(modal) {
+            })
+            .then(function(modal) {
               modal.element.modal();
               modal.close.then(function(result) {
                 $location.path('admin');
@@ -170,6 +172,8 @@
         alert('An error ocurred while uploading the image');
         $log.error('An error ocurred uploading the image :' + response.message);
       };
+
+      uploader.queue[0].upload();
     }
   }])
 

@@ -7,10 +7,10 @@
     alert.alert-danger(ng-show='form.$submitted && form.brewery.$error.required') #[.fa.fa-exclamation-triangle] Le champ brasserie est obligatoire
     alert.alert-danger(ng-show='form.$submitted && form.file.$error.required') #[.fa.fa-exclamation-triangle] Veuillez selectionner une image
     alert.alert-danger(ng-show='form.$submitted && form.file.$error.valid_file') #[.fa.fa-exclamation-triangle] Le fichier doit être une image
-    alert.alert-danger(ng-show='form.$submitted && form.description.$error.required') #[.fa.fa-exclamation-triangle] Beer description is required
-    alert.alert-danger(ng-show='form.$submitted && form.kind.$error.required') #[.fa.fa-exclamation-triangle] Le type de bière est obligatoire
-    alert.alert-danger(ng-show='form.$submitted && form.price.$error.required') #[.fa.fa-exclamation-triangle] Beer price is required
-    alert.alert-danger(ng-show='form.$submitted && form.price.$error.number') #[.fa.fa-exclamation-triangle] The price is not a valid number
+    alert.alert-danger(ng-show='form.$submitted && form.description.$error.required') #[.fa.fa-exclamation-triangle] La description de la bière est requise
+    alert.alert-danger(ng-show='form.$submitted && form.kind.$error.required') #[.fa.fa-exclamation-triangle] T'as oublié d'écrire le type de bière
+    alert.alert-danger(ng-show='form.$submitted && form.price.$error.required') #[.fa.fa-exclamation-triangle] Le prix es obligatoire
+    alert.alert-danger(ng-show='form.$submitted && form.price.$error.number') #[.fa.fa-exclamation-triangle] Le prix n'est pas un numéro
     alert.alert-danger(ng-show='form.$submitted && form.alcohol.$error.required') #[.fa.fa-exclamation-triangle] La quantité d'alcool est obligatoire
     alert.alert-danger(ng-show='form.$submitted && form.alcohol.$error.number') #[.fa.fa-exclamation-triangle] La donnée introduite n'est pas un numéro valable
     
@@ -25,7 +25,7 @@
       input(name='file', ng-model='beer.file', type='file', valid-file, accept='image/*', nv-file-select='' uploader='uploader')
       span(ng-repeat='item in uploader.queue')
         .thumbnail(ng-thumb='{ file: item._file, imageData: beerImage, height: 200 }')
-      p.help-block Gimme a file, not so big, and well proportioned
+      p.help-block Introduisez une image pas trop grande et bien proportionnée
     .form-group(ng-class='{"has-error": (form.description.$dirty && form.description.$invalid)}')
       label(for='description') Description
       textarea.form-control(name='description', ng-model='beer.description', rows = '7', required)
@@ -41,4 +41,4 @@
       label(for='price') Prix
       input.form-control(name='price', ng-model='beer.price', type='number', required)
       
-    button.btn.btn-default(type = 'submit', ng-click='editBeer(beer)') #[i.fa.fa-check] Add Beer
+    button.btn.btn-default(type = 'submit', ng-click='editBeer()') #[i.fa.fa-check] Add Beer

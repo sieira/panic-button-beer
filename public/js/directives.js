@@ -100,7 +100,7 @@
     }
   })
 
-  .directive('validFile',function(){
+  .directive('validFile',function() {
     function isImage(item) {
       var type = '|' + item.slice(item.lastIndexOf('.') + 1) + '|';
       return '|jpg|png|jpeg|bmp|gif|'.indexOf(type) !== -1;
@@ -109,6 +109,16 @@
     return {
       require:'ngModel',
       link: function(scope,el,attrs,ctrl) {
+        /**
+         * When editing an existing beer,
+         * there is already an image uploaded,
+         * so it passes validation
+         **/
+        if(scope.beer._id) {
+          ctrl.$setValidity('required', true);
+          ctrl.$setValidity('valid_file', true);
+          return;
+        }
         ctrl.$setValidity('required', el.val() != '');
         //change event is fired when file is selected
         el.bind('change',function(){
