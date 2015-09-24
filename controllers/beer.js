@@ -43,7 +43,18 @@ exports.editBeer = function(item) {
 	var beer = new Beer(item);
 
   var id = beer._id;
-  delete beer._id;
+
+  if(id) {
+    delete beer._id;
+
+    // Delete the name from the update if it didn't change
+    // to avoid breaking the unique index in mongo 2.4
+    Beer.findOne({ _id: id }, function(err, data) {
+      if(data && data.name === beer.name) {
+        delete beer.name;
+      }
+    });
+  }
 
   // Register or update beer
   Beer.update({ _id: id }, beer, { upsert: true, multi: false }, function(err, data) {
