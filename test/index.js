@@ -13,50 +13,61 @@ var should = require('chai').should(),
     server = new Server({ port: port }),
     mongoose = require('mongoose'),
     querystring = require('querystring'),
-    mocha_mongoose = require('mocha-mongoose');
+    mocha_mongoose = require('mocha-mongoose'),
+    User = require('../models/user');
 
 
 var dbURI = (process.env.DB_URL || 'mongodb://localhost:27017/') + process.env.TEST_DB,
     clearDB  = mocha_mongoose(dbURI,{ noClear : true });
 
-mongoose.connect(dbURI);
-
 describe('# Backend', function() {
-  describe('# Database', function() {
-    var beers,
-        beerImages,
-        beerId,
+  var beers,
+      beerImages,
+      testUser = { username: 'admin', password: 'admin'};
+
+  before(function(done) {
+    mongoose.connect(dbURI);
+    done();
+  });
+
+  before(function(done) {
+    clearDB(done);
+  });
+
+  before(function(done) {
+    server.start();
+    done();
+  });
+
+  before(function(done) {
+    fs.readFile('test/beers.json', { encoding : 'utf8' }, function(err,data) {
+      if(err) should.fail(0,1,'Error reading example beers file ' + err);
+      beers = JSON.parse(data);
+      done();
+    });
+  });
+
+  before(function(done) {
+    fs.readFile('test/beer-images.json',{ encoding : 'utf8' }, function(err,data) {
+      if(err) should.fail(0,1,'Error reading example beer images file' + err);
+      beerImages = JSON.parse(data);
+      done();
+    });
+  });
+
+  after(function(done) {
+    server.stop();
+    done();
+  });
+
+  describe('# Logged in', function() {
+    var beerId,
         beerImageId,
         deletedBeer;
 
     before(function(done) {
-      clearDB(done);
-    });
-
-    before(function(done) {
-      server.start();
-      done();
-    });
-
-    before(function(done) {
-      fs.readFile('test/beers.json', { encoding : 'utf8' }, function(err,data) {
-        if(err) should.fail(0,1,'Error reading example beers file ' + err);
-        beers = JSON.parse(data);
-        done();
-      });
-    });
-
-    before(function(done) {
-      fs.readFile('test/beer-images.json',{ encoding : 'utf8' }, function(err,data) {
-        if(err) should.fail(0,1,'Error reading example beer images file' + err);
-        beerImages = JSON.parse(data);
-        done();
-      });
-    });
-
-    after(function(done) {
-      server.stop();
-      done();
+      var user = new User(testUser);
+      user.save(done);
     });
 
     it('Getting a beer when there is none should return 404 and not fail', function (done) {
@@ -75,7 +86,28 @@ describe('# Backend', function() {
       .on('data', function(data) {
         should.equal(JSON.parse(data), null);
         done();
+      });
+    });
+
+    it('Should log in', function(done) {
+      var options = {
+        uri: 'http://' + hostname + ':' + port  + '/login',
+      };
+
+      var postData = querystring.stringify(testUser);
+
+      request.post(options)
+      .form(postData)
+      .on('response', function(res) {
+        res.statusCode.should.equal(201);
       })
+      .on('error', function(e) {
+        should.fail(0,1,'Problem logging in: ' + e.message);
+      })
+      .on('data', function(data) {
+        console.log(data);
+        done();
+      });
     });
 
     it('Inserting test images should not fail', function(done) {

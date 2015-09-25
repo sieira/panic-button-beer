@@ -11,7 +11,10 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     backoffice = require('./routes/backoffice'),
     multer = require('multer'),
-    favicon = require('serve-favicon');
+    passport = require('passport'),
+    favicon = require('serve-favicon'),
+    fs = require('fs'),
+    authController = require('./controllers/authentication');
 
 function Server(options) {
   var server;
@@ -26,6 +29,7 @@ function Server(options) {
   app.set('port', options.port || process.env.PORT || 8080);
   app.set('ip', process.env.HOST || 'localhost');
 
+  app.use(passport.initialize());
   app.use(favicon(path.join(__dirname,'public/img/panic-button-128.png')));
 
   app.use(bodyParser.urlencoded({ extended: false })); // parse application/x-www-form-urlencoded
@@ -40,11 +44,13 @@ function Server(options) {
   if(process.env.NODE_ENV === 'development') {
     app.use(morgan('dev'));
   } else {
-    app.use(morgan('common', { skip: function(req, res) { return res.statusCode < 400 }, stream: process.env.LOG_DIR + '/morgan.log' }));
+    var logFile = (process.env.LOG_DIR || __dirname) + '/morgan.log';
+    var accessLogStream = fs.createWriteStream(logFile, {flags: 'a'})
+    app.use(morgan('common', { skip: function(req, res) { return res.statusCode < 400 }, stream: accessLogStream }));
   }
 
   app.get('/', routes.index);
-  app.get('/admin', backoffice.index);
+  app.get('/admin', authController.isAuthenticated, backoffice.index);
 
   app.get('/panic-button', routes.panicButton);
 
@@ -56,25 +62,26 @@ function Server(options) {
   app.post('/beer-detail/:beerId', routes.beerDetail);
   app.post('/beer-name-exists/:beerName', routes.beerNameExists);
 
-  app.get('/beer-list', backoffice.beerList);
-  app.get('/beer-preview', backoffice.beerPreview);
-  app.post('/set-visibility/:beerId', backoffice.setVisibility);
+  app.get('/beer-list', authController.isAuthenticated, backoffice.beerList);
+  app.get('/beer-preview', authController.isAuthenticated, backoffice.beerPreview);
+  app.post('/set-visibility/:beerId', authController.isAuthenticated, backoffice.setVisibility);
 
-  app.get('/edit-beer', backoffice.editBeer);
-  app.post('/edit-beer', backoffice.editBeer);
+  app.get('/edit-beer', authController.isAuthenticated, backoffice.editBeer);
+  app.post('/edit-beer', authController.isAuthenticated, backoffice.editBeer);
 
   app.get('/beerOKmodal', function(req,res) {
     res.render('views/backoffice/beerOKmodal', { title: 'OK' })
   });
 
-  app.delete('/delete-beer/:beerId', backoffice.deleteBeer);
-  app.post('/undelete-beer/:beerId', backoffice.undeleteBeer);
+  app.delete('/delete-beer/:beerId', authController.isAuthenticated, backoffice.deleteBeer);
+  app.post('/undelete-beer/:beerId', authController.isAuthenticated, backoffice.undeleteBeer);
 
-  app.post('/register-beer-image', upload.single('file'), backoffice.registerBeerImage);
+  app.post('/register-beer-image', authController.isAuthenticated, upload.single('file'), backoffice.registerBeerImage);
   app.get('/beer-image/:beerId', routes.beerImage);
 
   app.get('*', routes._404);
 
+  app.post('/login', authController.isAuthenticated);
 
   // Start it up!
   this.start = function() {
