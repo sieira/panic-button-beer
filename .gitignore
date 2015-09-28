@@ -2,6 +2,10 @@
 logs
 *.log
 
+# Licensed content
+public/img
+public/css/fonts
+
 # Runtime data
 pids
 *.pid
