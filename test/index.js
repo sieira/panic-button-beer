@@ -89,27 +89,6 @@ describe('# Backend', function() {
       });
     });
 
-    it('Should log in', function(done) {
-      var options = {
-        uri: 'http://' + hostname + ':' + port  + '/login',
-      };
-
-      var postData = querystring.stringify(testUser);
-
-      request.post(options)
-      .form(postData)
-      .on('response', function(res) {
-        res.statusCode.should.equal(201);
-      })
-      .on('error', function(e) {
-        should.fail(0,1,'Problem logging in: ' + e.message);
-      })
-      .on('data', function(data) {
-        console.log(data);
-        done();
-      });
-    });
-
     it('Inserting test images should not fail', function(done) {
       var options = {
         uri: 'http://' + hostname + ':' + port  + '/register-beer-image',
@@ -120,6 +99,7 @@ describe('# Backend', function() {
 
       beerImages.forEach(function(beerImage, index) {
         request.post(options)
+        .auth(testUser.username, testUser.password, false)
         .on('response', function(res) {
           res.statusCode.should.equal(201);
         })
@@ -148,6 +128,7 @@ describe('# Backend', function() {
         var postData = querystring.stringify(beer);
 
         request.post(options)
+        .auth(testUser.username, testUser.password, false)
         .form(postData)
         .on('response', function(res) {
           res.statusCode.should.equal(201);
@@ -195,30 +176,31 @@ describe('# Backend', function() {
 
       request
       .post(options)
+      .auth(testUser.username, testUser.password, false)
       .form(postData)
       .on('response', function(res) {
         res.statusCode.should.equal(201);
+
+        options = {
+          uri: 'http://' + hostname + ':' + port  + '/beer-detail/' + beerId,
+          encoding: 'utf8'
+        };
+
+        request
+        .post(options)
+        .on('response', function(res) {
+          res.statusCode.should.equal(200);
+        })
+        .on('error', function(e) {
+          should.fail(0,1,'Problem getting beer: ' + e.message);
+        })
+        .on('data', function(data) {
+          JSON.parse(data).visible.should.equal(true);
+          done();
+        });
       })
       .on('error', function(e) {
         should.fail(0,1,'Problem setting visibility: ' + e.message);
-      });
-
-      options = {
-        uri: 'http://' + hostname + ':' + port  + '/beer-detail/' + beerId,
-        encoding: 'utf8'
-      };
-
-      request
-      .post(options)
-      .on('response', function(res) {
-        res.statusCode.should.equal(200);
-      })
-      .on('error', function(e) {
-        should.fail(0,1,'Problem getting beer: ' + e.message);
-      })
-      .on('data', function(data) {
-        JSON.parse(data).visible.should.equal(true);
-        done();
       });
     });
 
@@ -268,6 +250,7 @@ describe('# Backend', function() {
 
       request
       .del(options)
+      .auth(testUser.username, testUser.password, false)
       .on('response', function(res) {
         var body ='';
 
@@ -290,6 +273,7 @@ describe('# Backend', function() {
       };
 
       request.post(options)
+      .auth(testUser.username, testUser.password, false)
       .on('response', function(res) {
         res.statusCode.should.equal(200);
       })

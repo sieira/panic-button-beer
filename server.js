@@ -81,8 +81,6 @@ function Server(options) {
 
   app.get('*', routes._404);
 
-  app.post('/login', authController.isAuthenticated);
-
   // Start it up!
   this.start = function() {
     server = app.listen(app.get('port'), app.get('ip'), function() {
