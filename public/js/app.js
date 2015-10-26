@@ -2,8 +2,7 @@
 
 (function() {
 	var app = angular.module('eltast', ['ngRoute', 'ui.bootstrap', 'angularFileUpload', 'ngProgress', 'angularModalService'])
-  .config(['$routeProvider',
-		function($routeProvider) {
+  .config(['$routeProvider', function($routeProvider) {
 			$routeProvider
 			/*
 			 *  Routes
@@ -18,8 +17,12 @@
 
 				resolve: {
 					beer: function(beerRetrievalService) {
-					return beerRetrievalService.getRandomBeer();
-				}}
+						return beerRetrievalService.getRandomBeer();
+					},
+					takeItEasy: function($timeout) {
+						return $timeout(4000);
+					}
+				}
 			})
 			.when('/admin', {
 				templateUrl : '/admin',
