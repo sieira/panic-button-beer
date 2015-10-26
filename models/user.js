@@ -15,7 +15,6 @@ var UserSchema = new mongoose.Schema({
   }
 });
 
-// Execute before each user.save() call
 UserSchema.pre('save', function(callback) {
   var user = this;
 

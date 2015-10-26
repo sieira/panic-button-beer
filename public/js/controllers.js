@@ -75,7 +75,7 @@
   .controller('productDetailController', ['$log', '$rootScope', '$scope', '$http', '$window', 'ngProgressFactory', 'beer', function($log, $rootScope, $scope, $http, $window, ngProgressFactory, beer) {
     $rootScope.showHeader = true;
 
-    var timeToGo = 10000,
+    var timeToGo = 15000,
         tick = 10,
         elapsed = 0;
 
